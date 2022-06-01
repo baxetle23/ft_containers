@@ -1,1 +1,0 @@
-/usr/bin/c++   -Wall -Wextra -Werror -std=c++98   CMakeFiles/ft_vector.dir/src/ft_vector.cpp.o CMakeFiles/ft_vector.dir/src/main.cpp.o  -o ft_vector 
