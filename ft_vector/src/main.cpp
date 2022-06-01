@@ -2,5 +2,5 @@
 
 int main() {
     ft::vector<int> test;
-    test.Hello();
+
 }
