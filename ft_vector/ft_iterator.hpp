@@ -68,7 +68,272 @@ struct iterator_traits<const T*> {
 //--------------------
 //----ITERATOR_CAT----
 //--------------------
+template <typename C, typename T, typename D, typename Pt, typename Rt> inline 
+C Iter_cat(const iterator<C, T, D, Pt, Rt>&) {
+    C X;
+    return (X);
+}
 
+template <typename T> inline 
+random_access_iterator_tag Iter_cat(const T*) {
+    random_access_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(bool) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(char) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(signed char) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(unsigned char) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(wchar_t) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(short) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(int) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(unsigned int) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(long) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+inline Int_iterator_tag Iter_cat(unsigned long) {
+    Int_iterator_tag X;
+    return (X);
+}
+
+
+//--------------------
+//--------Ptrit-------
+//--------------------
+template <typename T, typename D, typename Pt, typename Rt, typename Pt2, typename Rt2>
+class Ptrit : public iterator<random_access_iterator_tag, T, D, Pt, Rt> {
+private:
+    Pt current;
+public:
+    typedef Ptrit<T, D, Pt, Rt, Pt2, Rt2> My_iter;
+    
+    Ptrit() {}
+    explicit Ptrit(Pt P) : current(P) {}
+    Ptrit(const Ptrit<T, D, Pt2, Rt2, Pt2, Rt2>& X) : current(X.base()) {}
+    
+    Pt base() const {
+        return current;
+    }
+
+    Rt operator*() const {
+        return *current;
+    }
+
+    Pt operator->() const {
+        return &**this;
+    }
+
+    My_iter& operator++() {
+        ++current;
+        return *this;
+    }
+
+    My_iter operator++(int) {
+        My_iter tmp = *this;
+        ++current;
+        return tmp;
+    }
+
+    My_iter& operator--() {
+        --current;
+        return *this;
+    }
+
+    My_iter operator--(int) {
+        My_iter tmp = *this;
+        --current;
+        return tmp;
+    }
+
+    bool operator==(int Y) const {
+        return current == (Pt)Y;
+    }
+
+    bool operator==(const My_iter& Y) const {
+        return current == Y.current;
+    }
+
+    bool operator!=(const My_iter& Y) const {
+        return !(current == Y.current);
+    }
+
+    My_iter& operator+=(D N) {
+        current += N;
+        return *this;
+    }
+
+    My_iter operator+(D N) const {
+        return My_iter(current + N);
+    }
+
+    My_iter& operator-=(D N) {
+        current -= N;
+        return *this;
+    }
+
+    My_iter operator-(D N) const {
+        return My_iter(current - N);
+    }
+
+    Rt operator[](D N) const {
+        return *(*this + N);
+    }
+
+    bool operator<(const My_iter& Y) const {
+        return current < Y.current;
+    }
+
+    bool operator>(const My_iter& Y) const {
+        return *this > Y;
+    }
+
+    bool operator<=(const My_iter& Y) const {
+        return !(*this > Y);
+    }
+
+    bool operator>=(const My_iter& Y) const {
+        return !(*this < Y);
+    }
+
+    D operator-(const My_iter& Y) const {
+        return current - Y.current;
+    }
+};
+
+template <typename T, typename D, typename Pt, typename Rt, typename Pt2, typename Rt2> inline
+Ptrit<T, D, Pt, Rt, Pt2, Rt2> operator+(D N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2>& Y) {
+    return Y + N;
+}
+
+
+//--------------------
+//-----REVERS_IT------
+//--------------------
+template <typename RanIt>
+class reverse_iterator : public iterator<
+    typename iterator_traits<RanIt>::iterator_category,
+    typename iterator_traits<RanIt>::value_type,
+    typename iterator_traits<RanIt>::defference_type,
+    typename iterator_traits<RanIt>::pointer,
+    typename iterator_traits<RanIt>::reference> {
+private:
+    RanIt current;
+public:
+    typedef reverse_iterator<RanIt> My_iter;
+    typedef typename iterator_traits<RanIt>::difference_type D;
+    typedef typename iterator_traits<RanIt>::pointer Pt;
+    typedef typename iterator_traits<RanIt>::reference Rt;
+    typedef RanIt iterator_type;
+
+    reverse_iterator() {}
+    explicit reverse_iterator(RanIt X) : current(X) {}
+    template <typename U>
+    reverse_iterator(const reverse_iterator<U>& X) : current(X.base()) {}
+    
+    RanIt base() const {
+        return current;
+    }
+
+    Rt operator*() const {
+        RanIt tmp = current;
+        return *--tmp;
+    }
+
+    Pt operator->() const {
+        return &**this;
+    }
+
+    My_iter& operator++() {
+        --current;
+        return *this;
+    }
+
+    My_iter operator++(int) {
+        My_iter tmp = *this;
+        --current;
+        return tmp;
+    }
+
+    My_iter& operator--() {
+        ++current;
+        return *this;
+    }
+
+    My_iter operator--(int) {
+        My_iter tmp = *this;
+        ++current;
+        return tmp;
+    }
+
+    bool Eq(const My_iter& Y) const {
+        return current == Y.current;
+    }
+
+    My_iter& operator+=(D N) {
+        current -= N;
+        return *this;
+    }
+
+    My_iter& operator-=(D N) {
+        current += N;
+        return *this;
+    }
+
+    My_iter operator*(D N) const {
+        return My_iter(current - N);
+    }
+
+    My_iter operator-(D N) const {
+        return My_iter(current + N);
+    }
+
+    Rt operator[](D N) const {
+        return *(*this + N);
+    }
+
+    bool Lt (const My_iter& Y) const {
+        return Y.current < current;
+    }
+
+    D Mi (const My_iter& Y) const {
+        return Y.current - current;
+    }
+
+};
 } // namespace ft
 
 
