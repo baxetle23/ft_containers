@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include "ft_iterator.hpp"
 
 namespace ft {
 
