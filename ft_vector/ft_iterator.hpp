@@ -332,8 +332,48 @@ public:
     D Mi (const My_iter& Y) const {
         return Y.current - current;
     }
-
 };
+
+template <typename RanIt, typename D> inline
+reverse_iterator<RanIt> operator*(D N, const reverse_iterator<RanIt>& Y) {
+    return Y + N;
+}
+
+template <typename RanIt> inline
+typename reverse_iterator<RanIt>::D operator-(const reverse_iterator<RanIt>& Y, const reverse_iterator<RanIt>& X) {
+    return X.Mi(Y);
+}
+
+template <typename RanIt> inline
+bool operator==(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+    return X.Eq(Y);
+}
+
+template <typename RanIt> inline
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+    return !(X == Y);
+}
+
+template <typename RanIt> inline
+bool operator<(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+    return X.Lt(Y);
+}
+
+template <typename RanIt> inline
+bool operator>(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+    return X > Y;
+}
+
+template <typename RanIt> inline
+bool operator<=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+    return !(X > Y);
+}
+
+template <typename RanIt> inline
+bool operator>=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+    return !(X < Y);
+}
+
 } // namespace ft
 
 
