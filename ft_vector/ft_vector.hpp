@@ -1,6 +1,8 @@
 #ifndef FT_VECTOR_H_
 #define FT_VECTOR_H_
 
+#include <iostream>
+
 #include <memory>
 #include <stdexcept>
 #include "ft_iterator.hpp"
@@ -19,7 +21,7 @@ protected:
 };
 
 template <typename T, typename Al = std::allocator<T> >
-class vector : public vector_base<T, Al> {
+class vector : public ft::vector_base<T, Al> {
 private:
     T*      begin_;
     size_t  size_;
@@ -29,16 +31,18 @@ public:
     //--------------------
     //------TYPEDEF-------
     //--------------------
-    typedef ft::vector<T, Al>                           ft_vector;
+    typedef vector<T, Al>                               my_vector;
     typedef ft::vector_base<T, Al>                      vector_base;
+    typedef size_t                                      size_type;
+    typedef T                                           value_type;
+    
     typedef typename vector_base::Altype                allocator_type;
-    typedef typename allocator_type::size_type          size_type;
     typedef typename allocator_type::difference_type    difference_type;
     typedef typename allocator_type::pointer            pointer;
     typedef typename allocator_type::const_pointer      const_pointer;
     typedef typename allocator_type::reference          reference;
     typedef typename allocator_type::const_reference    const_reference;
-    typedef typename allocator_type::value_type         value_type;
+    
     typedef Ptrit<value_type, difference_type, pointer,
                 reference, pointer, reference>          iterator;
     typedef Ptrit<value_type, difference_type,
@@ -51,21 +55,26 @@ public:
     //-----CONSTRUCT------
     //--------------------
     explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
+        std::cout << "1 construct" << std::endl;
         allocated_memory(0);
     }
 
-    explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) :
-        vector_base(alloc) {
+    explicit vector(size_type n, const T& val = T(), const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
+        std::cout << "2 construct" << std::endl;
         allocated_memory(n);
         if (!create_values(n, begin_, val)) {
             throw std::bad_alloc();
         }
     }
 
-    explicit vector (const vector& x);
+    explicit vector(const my_vector& x) : vector_base(x.allocator_) {
+        std::cout << "3 construct" << std::endl;
+    }
     
-    template <class InputIterator>
-    vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+    template <typename InputIterator>
+    explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
+        std::cout << "4 construct" << std::endl;
+    }
 
     //--------------------
     //----PRIVATE_FUN-----
