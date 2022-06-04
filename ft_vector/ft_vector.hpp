@@ -52,7 +52,7 @@ public:
     typedef ft::reverse_iterator<const_iterator>        const_reverse_iterator;
 
     //--------------------
-    //-----CONSTRUCT------
+    //----CONSTRUCTOR-----
     //--------------------
     explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
         std::cout << "1 construct" << std::endl;
@@ -65,6 +65,7 @@ public:
         if (!create_values(n, begin_, val)) {
             throw std::bad_alloc();
         }
+        size_ = capacity_ = n;
     }
 
     explicit vector(const my_vector& x) : vector_base(x.allocator_) {
@@ -76,6 +77,46 @@ public:
         std::cout << "4 construct" << std::endl;
     }
 
+    ~vector() {
+        destroy_values(begin_, begin_ + size_);
+        delete_memory();
+    }
+    
+    
+    //--------------------
+    //-----ITERATORS------
+    //--------------------
+    iterator begin() {
+        return iterator(begin_);
+    }
+
+    const_iterator begin() const {
+        return const_iterator(begin_);
+    }
+
+    reverse_iterator rbegin() {
+        return reverse_iterator(end());
+    }
+
+    const_reverse_iterator rbegin() const {
+        return const_reverse_iterator(end());
+    }
+
+    iterator end() {
+        return iterator(begin_ + size_);
+    }
+
+    const_iterator end() const {
+        return const_iterator(begin_ + size_);
+    }
+
+    reverse_iterator rend() {
+        return reverse_iterator(begin());
+    }
+
+    const_reverse_iterator rend() const {
+        return const_reverse_iterator(begin());
+    }
     //--------------------
     //----PRIVATE_FUN-----
     //--------------------
