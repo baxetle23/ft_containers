@@ -5,6 +5,7 @@
 int main() {
     ft::vector<int> test1((size_t)10, 12);
     ft::vector<int> test(10);
+    ft::vector<int> test3(test1);
 
 
     std::cout << "print vector1 : ";

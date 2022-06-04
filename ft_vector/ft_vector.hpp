@@ -70,6 +70,11 @@ public:
 
     explicit vector(const my_vector& x) : vector_base(x.allocator_) {
         std::cout << "3 construct" << std::endl;
+        allocated_memory(x.size_);
+        if (!copy_values(x.size_, x.begin_)) {
+            throw std::bad_alloc();
+        }
+        size_ = capacity_ = x.size_;
     }
     
     template <typename InputIterator>
@@ -143,6 +148,19 @@ private:
                 vector_base::allocator_.construct(tmp, value);
             }
             return true;
+        } catch (...) {
+            destroy_values(begin_to_fill, tmp);
+            return false;
+        }
+    }
+
+    bool copy_values(size_type n, pointer begin_to_fill) {
+        pointer tmp = begin_to_fill;
+        try {
+            for (; 0 < n; --n, ++tmp) {
+                vector_base::allocator_.construct(tmp, *tmp);
+                return true;
+            }
         } catch (...) {
             destroy_values(begin_to_fill, tmp);
             return false;
