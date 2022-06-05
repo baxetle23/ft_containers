@@ -55,12 +55,16 @@ public:
     //----CONSTRUCTOR-----
     //--------------------
     explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-        std::cout << "1 construct" << std::endl;
+        #ifdef DEBUG 
+            std::cout << "1 construct" << std::endl;
+        #endif
         allocated_memory(0);
     }
 
     explicit vector(size_type n, const T& val = T(), const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-        std::cout << "2 construct" << std::endl;
+        #ifdef DEBUG
+            std::cout << "2 construct" << std::endl;
+        #endif
         allocated_memory(n);
         if (!create_values(n, begin_, val)) {
             throw std::bad_alloc();
@@ -69,7 +73,9 @@ public:
     }
 
     explicit vector(const my_vector& x) : vector_base(x.allocator_) {
-        std::cout << "3 construct" << std::endl;
+        #ifdef DEBUG
+            std::cout << "3 construct" << std::endl;
+        #endif
         allocated_memory(x.size_);
         if (!copy_values(x.size_, x.begin_)) {
             throw std::bad_alloc();
@@ -79,7 +85,9 @@ public:
     
     template <typename InputIterator>
     explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-        std::cout << "4 construct" << std::endl;
+        #ifdef DEBUG
+            std::cout << "4 construct" << std::endl;
+        #endif
     }
 
     ~vector() {
@@ -122,6 +130,123 @@ public:
     const_reverse_iterator rend() const {
         return const_reverse_iterator(begin());
     }
+
+    //--------------------
+    //-----PUBLIC_FUN-----
+    //--------------------
+    my_vector& operator=(const my_vector& other) {
+
+    }
+
+    void reserve(size_type n) {
+
+    }
+
+    size_type capacity() const {
+
+    }
+
+    void resize(size_type n, const value_type& val = value_type()) {
+
+    }
+
+    size_type size() const {
+
+    }
+
+    size_type max_size() const {
+
+    }
+
+    bool empty() const {
+
+    }
+
+    allocator_type get_allocator() const {
+
+    }
+
+    const_reference at(size_type n) const {
+
+    }
+
+    reference at(size_type n) {
+
+    }
+
+    const_reference operator[](size_type n) const {
+
+    }
+
+    reference operator[](size_type n) {
+
+    }
+
+    const_reference front(size_type n) const {
+
+    }
+
+    reference front(size_type n) {
+
+    }
+
+    const_reference back(size_type n) const {
+
+    }
+
+    reference back(size_type n) {
+
+    }
+
+    void push_back(const value_type& val) {
+
+    }
+
+    void pop_back() {
+
+    }
+
+    template <class InputIterator>
+    void assign (InputIterator first, InputIterator last) {
+
+    }
+
+    void assign (size_type n, const value_type& val) {
+
+    }
+
+    template <class InputIterator>
+    void insert (iterator position, InputIterator first, InputIterator last) {
+
+    }
+
+    iterator insert(iterator position, const value_type& val) {
+
+    }
+
+    void insert(iterator position, size_type n, const value_type& val) {
+
+    }
+
+    iterator erase (iterator position) {
+
+    }
+
+    iterator erase (iterator first, iterator last) {
+
+    }
+
+    void swap (my_vector& x) {
+
+    }
+
+    void clear() {
+
+    }
+    
+
+    
+
     //--------------------
     //----PRIVATE_FUN-----
     //--------------------
