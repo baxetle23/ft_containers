@@ -135,7 +135,16 @@ public:
     //-----PUBLIC_FUN-----
     //--------------------
     my_vector& operator=(const my_vector& other) {
+        if (this == &other) {
+            return *this;
+        }
 
+        if (other.size() > capacity()) {
+            my_vector tmp(other);
+            swap(tmp);
+        } else {
+
+        }
     }
 
     void reserve(size_type n) {
@@ -143,7 +152,7 @@ public:
     }
 
     size_type capacity() const {
-
+        return capacity_;
     }
 
     void resize(size_type n, const value_type& val = value_type()) {
@@ -151,7 +160,7 @@ public:
     }
 
     size_type size() const {
-
+        return size_;
     }
 
     size_type max_size() const {
@@ -159,11 +168,11 @@ public:
     }
 
     bool empty() const {
-
+        return size_ == 0;
     }
 
     allocator_type get_allocator() const {
-
+        return my_vector::allocator_;
     }
 
     const_reference at(size_type n) const {
@@ -175,7 +184,7 @@ public:
     }
 
     const_reference operator[](size_type n) const {
-
+        
     }
 
     reference operator[](size_type n) {

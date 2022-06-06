@@ -6,15 +6,10 @@
 
 using namespace std;
 
-template <typename Vec>
-Vec& construct_ft_vector(Vec& vector) {
+template<typename Vec, typename... Args>
+Vec& construct_ft_vector(Vec& vector, Args&&... args) {
+    (vector.push_back(std::forward<Args>(args)), ...);
     return vector;
-}
-
-template<typename Vec, typename Arg, typename... Args>
-Vec& construct_ft_vector(Vec& vector, Arg arg, Args... args) {
-    vector.push_back(arg);
-    return construct_ft_vector(vector, args...);
 }
 
 inline void Test1() {
