@@ -6,6 +6,17 @@
 
 using namespace std;
 
+template <typename Vec>
+Vec& construct_ft_vector(Vec& vector) {
+    return vector;
+}
+
+template<typename Vec, typename Arg, typename... Args>
+Vec& construct_ft_vector(Vec& vector, Arg arg, Args... args) {
+    vector.push_back(arg);
+    return construct_ft_vector(vector, args...);
+}
+
 inline void Test1() {
     // Инициализация конструктором по умолчанию
     {
@@ -132,20 +143,21 @@ inline void Test2() {
     // pop_back
     {
         ft::vector<int> v;
-        v.push_back(0);v.push_back(1);v.push_back(2);v.push_back(3);
+        construct_ft_vector(v, 0, 1, 2, 3);
         const size_t old_capacity = v.capacity();
         const auto old_begin = v.begin();
         v.pop_back();
         assert(v.capacity() == old_capacity);
         assert(v.begin() == old_begin);
         ft::vector<int> x;
-        x.push_back(0);x.push_back(1);x.push_back(2);
+        construct_ft_vector(x, 0, 1, 2);
         assert(v == x);
     }
 
     // Конструктор копирования
     {
-        ft::vector<int> numbers{1, 2};
+        ft::vector<int> numbers;
+        construct_ft_vector(numbers, 1, 2);
         auto numbers_copy(numbers);
         assert(&numbers_copy[0] != &numbers[0]);
         assert(numbers_copy.size() == numbers.size());
@@ -197,24 +209,34 @@ inline void Test2() {
 
     // Присваивание
     {
-        // ft::vector<int> src_vector{1, 2, 3, 4};
-        // ft::vector<int> dst_vector{1, 2, 3, 4, 5, 6};
-        // dst_vector = src_vector;
-        // assert(dst_vector == src_vector);
+        ft::vector<int> src_vector;
+        construct_ft_vector(src_vector, 1, 2, 3, 4);
+        ft::vector<int> dst_vector;
+        construct_ft_vector(dst_vector, 1, 2, 3, 4, 5, 6);
+        dst_vector = src_vector;
+        assert(dst_vector == src_vector);
     }
 
     // Вставка элементов
     {
-        // ft::vector<int> v{1, 2, 3, 4};
-        // v.insert(v.begin() + 2, 42);
-        // assert((v == ft::vector<int>{1, 2, 42, 3, 4}));
+        ft::vector<int> v;
+        construct_ft_vector(v, 1, 2, 3, 4);
+        v.insert(v.begin() + 2, 42);
+
+        ft::vector<int> x;
+        construct_ft_vector(x, 1, 2, 42, 3, 4);
+        assert((v == x));
     }
 
     // Удаление элементов
     {
-        // ft::vector<int> v{1, 2, 3, 4};
-        // v.erase(v.begin() + 2);
-        // assert((v == ft::vector<int>{1, 2, 4}));
+        ft::vector<int> v;
+        construct_ft_vector(v, 1, 2, 3, 4);
+        v.erase(v.begin() + 2);
+
+        ft::vector<int> x;
+        construct_ft_vector(x, 1, 2, 4);
+        assert((v == x));
     }
 }
 
