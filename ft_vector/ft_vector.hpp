@@ -244,9 +244,6 @@ public:
 
     }
     
-
-    
-
     //--------------------
     //----PRIVATE_FUN-----
     //--------------------
@@ -298,6 +295,45 @@ private:
         }
     }
 };
+
+//--------------------
+//----TEMPLATE_FUN----
+//--------------------
+template <typename T, typename A> inline
+bool operator==(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
+template <typename T, typename A> inline
+bool operator!=(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
+template <typename T, typename A> inline
+bool operator<(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
+template <typename T, typename A> inline
+bool operator>(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
+template <typename T, typename A> inline
+bool operator<=(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
+template <typename T, typename A> inline
+bool operator>=(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
+template <typename T, typename A> inline
+void swap(const vector<T, A>& X, const vector<T, A>& Y) {
+
+}
+
 } //namespace ft
 
 #endif
