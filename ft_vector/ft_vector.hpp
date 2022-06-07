@@ -84,7 +84,8 @@ public:
     }
     
     template <typename InputIterator>
-    explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
+    explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+        typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) : vector_base(alloc) {
         #ifdef DEBUG
             std::cout << "4 construct" << std::endl;
         #endif
@@ -156,7 +157,11 @@ public:
     }
 
     void resize(size_type n, const value_type& val = value_type()) {
-
+        if (size() < n) {
+            insert(end(), n - size(), val);
+        } else if (size() > n) {
+            erase(begin() + n, end());
+        }
     }
 
     size_type size() const {
@@ -164,7 +169,7 @@ public:
     }
 
     size_type max_size() const {
-
+        return vector_base::allocator_.max_size();
     }
 
     bool empty() const {
@@ -176,43 +181,49 @@ public:
     }
 
     const_reference at(size_type n) const {
-
+        if (size() <= n) {
+            throw std::out_of_range("operator at");
+        }
+        return *(begin() + n);
     }
 
     reference at(size_type n) {
-
+        if (size() <= n) {
+            throw std::out_of_range("operator at");
+        }
+        return *(begin() + n);
     }
 
     const_reference operator[](size_type n) const {
-        
+        return *(begin() + n);
     }
 
     reference operator[](size_type n) {
-
+        return *(begin() + n);
     }
 
-    const_reference front(size_type n) const {
-
+    const_reference front() const {
+        return *begin();
     }
 
-    reference front(size_type n) {
-
+    reference front() {
+        return *begin();
     }
 
-    const_reference back(size_type n) const {
-
+    const_reference back() const {
+        return *(end() - 1);
     }
 
-    reference back(size_type n) {
-
+    reference back() {
+        return *(end() - 1);
     }
 
     void push_back(const value_type& val) {
-
+        insert(end(), val);
     }
 
     void pop_back() {
-
+        erase(end() - 1);
     }
 
     template <class InputIterator>

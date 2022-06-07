@@ -130,6 +130,33 @@ inline Int_iterator_tag Iter_cat(unsigned long) {
     return (X);
 }
 
+//--------------------
+//------ENABLE_IF-----
+//--------------------
+template<bool B, class T = void>
+struct	enable_if{};
+
+template<class T>
+struct enable_if<true, T> {typedef T type;};
+
+
+template<class T>
+struct	is_integral : std::false_type{};
+template<> struct	is_integral<int>: std::true_type{};
+template<> struct	is_integral<char>: std::true_type{};
+template<> struct	is_integral<bool>: std::true_type{};
+template<> struct	is_integral<char16_t>: std::true_type{};
+template<> struct	is_integral<char32_t>: std::true_type{};
+template<> struct	is_integral<wchar_t>: std::true_type{};
+template<> struct	is_integral<signed char>: std::true_type{};
+template<> struct	is_integral<short int>: std::true_type{};
+template<> struct	is_integral<unsigned int>: std::true_type{};
+template<> struct	is_integral<long int>: std::true_type{};
+template<> struct	is_integral<long long int>: std::true_type{};
+template<> struct	is_integral<unsigned char>: std::true_type{};
+template<> struct	is_integral<unsigned short int>: std::true_type{};
+template<> struct	is_integral<unsigned long int>: std::true_type{};
+template<> struct	is_integral<unsigned long long int>: std::true_type{};
 
 //--------------------
 //--------Ptrit-------
