@@ -55,16 +55,11 @@ public:
     //----CONSTRUCTOR-----
     //--------------------
     explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-        #ifdef DEBUG 
-            std::cout << "1 construct" << std::endl;
-        #endif
         allocated_memory(0);
+        size_ = capacity_ = 0;
     }
 
     explicit vector(size_type n, const T& val = T(), const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-        #ifdef DEBUG
-            std::cout << "2 construct" << std::endl;
-        #endif
         allocated_memory(n);
         if (!create_values(n, begin_, val)) {
             throw std::bad_alloc();
@@ -73,9 +68,6 @@ public:
     }
 
     explicit vector(const my_vector& x) : vector_base(x.allocator_) {
-        #ifdef DEBUG
-            std::cout << "3 construct" << std::endl;
-        #endif
         allocated_memory(x.size_);
         if (!copy_values(x.size_, x.begin_)) {
             throw std::bad_alloc();
@@ -86,14 +78,16 @@ public:
     template <typename InputIterator>
     explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
         typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) : vector_base(alloc) {
-        #ifdef DEBUG
-            std::cout << "4 construct" << std::endl;
-        #endif
+        insert(first, last);
     }
 
     ~vector() {
-        destroy_values(begin_, begin_ + size_);
-        delete_memory();
+        if (size()) {
+            destroy_values(begin_, size_);
+        }
+        if (capacity()) {
+            delete_memory(begin_, capacity_);
+        }
     }
     
     
@@ -144,11 +138,19 @@ public:
             my_vector tmp(other);
             swap(tmp);
         } else {
-
+            //скопировать элементы при необходимости добавить новые или удалить существующие
+            if (other.size() < size()) {
+                //разрушаем
+            } else {
+                //добовляем
+            }
         }
     }
 
-    void reserve(size_type n) {
+    void reserve(size_type new_capacity) {
+        if (new_capacity <= capacity()) {
+            return ;
+        }
 
     }
 
@@ -182,14 +184,14 @@ public:
 
     const_reference at(size_type n) const {
         if (size() <= n) {
-            throw std::out_of_range("operator at");
+            throw std::out_of_range("out of range");
         }
         return *(begin() + n);
     }
 
     reference at(size_type n) {
         if (size() <= n) {
-            throw std::out_of_range("operator at");
+            throw std::out_of_range("out of range");
         }
         return *(begin() + n);
     }
@@ -261,7 +263,7 @@ public:
     }
 
     void clear() {
-
+        erase(begin(), end());
     }
     
     //--------------------
@@ -269,9 +271,6 @@ public:
     //--------------------
 private:
     bool allocated_memory(size_type n) {
-        begin_ = NULL;
-        size_  = 0;
-        capacity_ = 0;
         if (n) {
             begin_ = vector_base::allocator_.allocate(n, (void *)0);
             return true;
@@ -279,8 +278,16 @@ private:
         return false;
     }
 
-    void delete_memory() {
-        vector_base::allocator_.deallocate(begin_, capacity_);
+    //освобождаем память по указателю и количеству
+    void delete_memory(pointer begin_to_delete, size_type count) {
+        vector_base::allocator_.deallocate(begin_to_delete, count);
+    }
+
+    //разрушаем объекты по указателю и количеству
+    void destroy_values(pointer begin_to_destroy, size_type count) {
+        for(; 0 < count; ++begin_to_destroy, --count) {
+            vector_base::allocator_.destroy(begin_to_destroy);
+        }
     }
 
     bool create_values(size_type n, pointer begin_to_fill, const T& value) {
@@ -291,7 +298,7 @@ private:
             }
             return true;
         } catch (...) {
-            destroy_values(begin_to_fill, tmp);
+            destroy_values(begin_to_fill, tmp - begin_to_fill);
             return false;
         }
     }
@@ -304,14 +311,8 @@ private:
                 return true;
             }
         } catch (...) {
-            destroy_values(begin_to_fill, tmp);
+            destroy_values(begin_to_fill, tmp - begin_to_fill);
             return false;
-        }
-    }
-
-    void destroy_values(pointer begin, pointer end) {
-        for(; begin != end; ++begin) {
-            vector_base::allocator_.destroy(begin);
         }
     }
 };
