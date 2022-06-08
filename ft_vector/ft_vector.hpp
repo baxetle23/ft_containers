@@ -251,7 +251,10 @@ public:
     }
 
     iterator erase (iterator position) {
-
+        std::copy(position + 1, end(), position);
+        destroy_values(&back(), 1);
+        --size_;
+        return position;
     }
 
     iterator erase (iterator first, iterator last) {
