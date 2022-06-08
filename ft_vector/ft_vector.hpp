@@ -243,22 +243,29 @@ public:
     }
 
     iterator insert(iterator position, const value_type& val) {
-
+        size_type offset = size() == 0 ? 0 : position - begin();
+        insert(position, 1, val);
+        return begin() + offset;
     }
 
     void insert(iterator position, size_type n, const value_type& val) {
 
     }
 
-    iterator erase (iterator position) {
+    iterator erase(iterator position) {
         std::copy(position + 1, end(), position);
         destroy_values(&back(), 1);
         --size_;
         return position;
     }
 
-    iterator erase (iterator first, iterator last) {
-
+    iterator erase(iterator first, iterator last) {
+        if (first != last) {
+            pointer new_end = std::copy(last, end(), first.base());
+            destroy_values(new_end, last - first);
+            size_ -= (last - first);
+        }
+        return first;
     }
 
     void swap (my_vector& x) {
@@ -311,12 +318,12 @@ private:
         try {
             for (; 0 < n; --n, ++tmp) {
                 vector_base::allocator_.construct(tmp, *tmp);
-                return true;
             }
         } catch (...) {
             destroy_values(begin_to_fill, tmp - begin_to_fill);
             return false;
         }
+        return true;
     }
 };
 
