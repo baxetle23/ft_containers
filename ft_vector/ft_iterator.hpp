@@ -28,8 +28,8 @@ struct iterator {
     typedef Rt  reference;
 };
 
-template <typename T, typename D, typename Pt, typename Rt>
-struct Bidit : public iterator<bidirectional_iterator_tag, T, D, Pt, Rt> {};
+// template <typename T, typename D, typename Pt, typename Rt>
+// struct Bidit : public iterator<bidirectional_iterator_tag, T, D, Pt, Rt> {};
 
 template <typename T, typename D, typename Pt, typename Rt>
 struct Ranit : public iterator<random_access_iterator_tag, T, D, Pt, Rt> {};
@@ -68,67 +68,67 @@ struct iterator_traits<const T*> {
 //--------------------
 //----ITERATOR_CAT----
 //--------------------
-template <typename C, typename T, typename D, typename Pt, typename Rt> inline 
-C Iter_cat(const iterator<C, T, D, Pt, Rt>&) {
-    C X;
-    return (X);
-}
+// template <typename C, typename T, typename D, typename Pt, typename Rt> inline 
+// C Iter_cat(const iterator<C, T, D, Pt, Rt>&) {
+//     C X;
+//     return (X);
+// }
 
-template <typename T> inline 
-random_access_iterator_tag Iter_cat(const T*) {
-    random_access_iterator_tag X;
-    return (X);
-}
+// template <typename T> inline 
+// random_access_iterator_tag Iter_cat(const T*) {
+//     random_access_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(bool) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(bool) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(char) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(char) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(signed char) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(signed char) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(unsigned char) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(unsigned char) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(wchar_t) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(wchar_t) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(short) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(short) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(int) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(int) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(unsigned int) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(unsigned int) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(long) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(long) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
-inline Int_iterator_tag Iter_cat(unsigned long) {
-    Int_iterator_tag X;
-    return (X);
-}
+// inline Int_iterator_tag Iter_cat(unsigned long) {
+//     Int_iterator_tag X;
+//     return (X);
+// }
 
 //--------------------
 //------ENABLE_IF-----
