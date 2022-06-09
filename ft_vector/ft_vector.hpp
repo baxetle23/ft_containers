@@ -229,17 +229,33 @@ public:
     }
 
     template <class InputIterator>
-    void assign (InputIterator first, InputIterator last) {
-
+    void assign (InputIterator first, InputIterator last,
+                 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) {
+        erase(begin(), end());
+        insert(begin(), first, last);
     }
 
     void assign (size_type n, const value_type& val) {
-
+        erase(begin(), end());
+        insert(begin(), n, val);
     }
 
     template <class InputIterator>
-    void insert (iterator position, InputIterator first, InputIterator last) {
+    void insert (iterator position, InputIterator first, InputIterator last,
+                 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) {
+        size_type size_insert  = last - first;
 
+        if (size_insert <= 0) {
+            ;
+        } else if (max_size() - size() < size_insert) {
+            throw std::out_of_range("insert range too long");
+        } else if (capacity() < size() + size_insert) {
+
+        } else if (end() - position < size_insert) {
+
+        } else {
+
+        }
     }
 
     iterator insert(iterator position, const value_type& val) {
@@ -248,8 +264,18 @@ public:
         return begin() + offset;
     }
 
-    void insert(iterator position, size_type n, const value_type& val) {
+    void insert(iterator position, size_type size_insert, const value_type& val) {
+        if (size_insert <= 0) {
+            ;
+        } else if (max_size() - size() < size_insert) {
 
+        } else if (capacity() < size() + size_insert) {
+
+        } else if (end() - position < size_insert) {
+
+        } else {
+
+        }
     }
 
     iterator erase(iterator position) {
