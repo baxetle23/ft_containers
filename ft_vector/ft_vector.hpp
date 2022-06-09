@@ -250,11 +250,14 @@ public:
         } else if (max_size() - size() < size_insert) {
             throw std::out_of_range("insert range too long");
         } else if (capacity() < size() + size_insert) {
+            // аллоцированной памяти не хватает перекопировать элементы в новый
+            // очистить старый вектор
 
         } else if (end() - position < size_insert) {
-
+            //разрушить объекты с posit до end
+            //создать обьекты
         } else {
-
+            //скопировать обьекты 
         }
     }
 
@@ -268,13 +271,30 @@ public:
         if (size_insert <= 0) {
             ;
         } else if (max_size() - size() < size_insert) {
-
+            throw std::out_of_range("insert range too long");
         } else if (capacity() < size() + size_insert) {
+            size_type new_capacity = max_size() - size_insert / 2 < size_insert ? 
+                0 : size_insert + size_insert / 2;
+            if (new_capacity < size() + size_insert) {
+                new_capacity = size() + size_insert;
+            }
+            pointer tmp_mem = vector_base::allocator_.allocate(new_capacity, 0);
+            pointer tmp_val;
+            try {
+               
 
+            } catch(...) {
+                
+            }
+            // аллоцированной памяти не хватает
+
+            // перекопировать элементы в новый
+            // очистить старый вектор
         } else if (end() - position < size_insert) {
-
+            //разрушить объекты с posit до end
+            //создать обьекты
         } else {
-
+            //скопировать обьекты
         }
     }
 
