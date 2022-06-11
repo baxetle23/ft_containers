@@ -164,16 +164,53 @@ inline void Test2() {
 
     // Сравнение
     {
-        // assert((ft::vector{1, 2, 3} == ft::vector{1, 2, 3}));
-        // assert((ft::vector{1, 2, 3} != ft::vector{1, 2, 2}));
+        {
+            ft::vector<int> first;
+            construct_ft_vector(first, 1, 2, 3);
+            ft::vector<int> second;
+            construct_ft_vector(second, 1, 2, 3);
+            assert(first == second);
+        }
 
-        // assert((ft::vector{1, 2, 3} < ft::vector{1, 2, 3, 1}));
-        // assert((ft::vector{1, 2, 3} > ft::vector{1, 2, 2, 1}));
+        {
+            ft::vector<int> first;
+            construct_ft_vector(first, 1, 2, 3);
+            ft::vector<int> second;
+            construct_ft_vector(second, 1, 2, 2);
+            assert(first != second);
+        }
 
-        // assert((ft::vector{1, 2, 3} >= ft::vector{1, 2, 3}));
-        // assert((ft::vector{1, 2, 4} >= ft::vector{1, 2, 3}));
-        // assert((ft::vector{1, 2, 3} <= ft::vector{1, 2, 3}));
-        // assert((ft::vector{1, 2, 3} <= ft::vector{1, 2, 4}));
+        {
+            ft::vector<int> first;
+            construct_ft_vector(first, 1, 2, 3);
+            ft::vector<int> second;
+            construct_ft_vector(second, 1, 2, 3, 1);
+            assert(first < second);
+        }
+
+        {
+            ft::vector<int> first;
+            construct_ft_vector(first, 1, 2, 3);
+            ft::vector<int> second;
+            construct_ft_vector(second, 1, 2, 2, 1);
+            assert(first > second);
+        }
+
+        {
+            ft::vector<int> first;
+            construct_ft_vector(first, 1, 2, 3);
+            ft::vector<int> second;
+            construct_ft_vector(second, 1, 2, 3);
+            assert(first >= second);
+        }
+
+        {
+            ft::vector<int> first;
+            construct_ft_vector(first, 1, 2, 3);
+            ft::vector<int> second;
+            construct_ft_vector(second, 1, 2, 3);
+            assert(first <= second);
+        }
     }
 
     // Обмен значений векторов
@@ -236,15 +273,12 @@ inline void Test2() {
 }
 
 void TestReserveConstructor() {
-    cout << "TestReserveConstructor"s << endl;
     ft::vector<int> v(5);
     assert(v.capacity() == 5);
-    assert(v.empty());
-    cout << "Done!"s << endl;
+    assert(v.size() == 5);
 }
 
 void TestReserveMethod() {
-    cout << "TestReserveMethod"s << endl;
     ft::vector<int> v;
     // зарезервируем 5 мест в векторе
     v.reserve(5);
@@ -269,7 +303,6 @@ void TestReserveMethod() {
     for (int i = 0; i < 10; ++i) {
         assert(v[i] == i);
     }
-    cout << "Done!"s << endl;
 }
 
 

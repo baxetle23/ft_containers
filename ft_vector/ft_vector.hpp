@@ -133,25 +133,26 @@ public:
         if (this == &other) {
             return *this;
         }
-
-        if (other.size() > capacity()) {
-            my_vector tmp(other);
-            swap(tmp);
-        } else {
-            //скопировать элементы при необходимости добавить новые или удалить существующие
-            if (other.size() < size()) {
-                //разрушаем
-            } else {
-                //добовляем
-            }
-        }
+        my_vector tmp(other);
+        swap(tmp);
     }
 
     void reserve(size_type new_capacity) {
         if (new_capacity <= capacity()) {
             return ;
-        }
+        } else {
+            pointer new_mem = vector_base::allocator_.allocate(new_capacity, 0);
+            copy_values(size_, begin_, new_mem);
+            if (size()) {
+                destroy_values(begin_, size_);
+            }
+            if (capacity()) {
+                delete_memory(begin_, capacity_);
+            }
 
+            begin_ = new_mem;
+            capacity_ = new_capacity;
+        }
     }
 
     size_type capacity() const {
@@ -359,6 +360,14 @@ public:
         erase(begin(), end());
     }
 
+    bool Eq(const my_vector& other) const {
+        return (size_ == other.size_ && std::equal(begin(), end(), other.begin()));
+    }
+
+    bool Lt(const my_vector& other) const {
+        return std::lexicographical_compare(begin(), end(), other.begin(), other.end());
+    }
+
     //--------------------
     //----PRIVATE_FUN-----
     //--------------------
@@ -415,37 +424,37 @@ private:
 //--------------------
 template <typename T, typename A> inline
 bool operator==(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    return X.Eq(Y);
 }
 
 template <typename T, typename A> inline
 bool operator!=(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    return !(X == Y);
 }
 
 template <typename T, typename A> inline
 bool operator<(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    return X.Lt(Y);
 }
 
 template <typename T, typename A> inline
 bool operator>(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    return Y < X;
 }
 
 template <typename T, typename A> inline
 bool operator<=(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    return !(Y < X);
 }
 
 template <typename T, typename A> inline
 bool operator>=(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    return !(X < Y);
 }
 
 template <typename T, typename A> inline
 void swap(const vector<T, A>& X, const vector<T, A>& Y) {
-
+    X.swap(Y);
 }
 
 } //namespace ft
