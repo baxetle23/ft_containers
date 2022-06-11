@@ -13,7 +13,7 @@ template <typename T, typename A>
 class vector_base {
 protected:
     typedef typename A::template rebind<T>::other Altype;
-    
+
     vector_base (A allocator = A()) : allocator_(allocator) {
     }
 
@@ -35,18 +35,18 @@ public:
     typedef ft::vector_base<T, Al>                      vector_base;
     typedef size_t                                      size_type;
     typedef T                                           value_type;
-    
+
     typedef typename vector_base::Altype                allocator_type;
     typedef typename allocator_type::difference_type    difference_type;
     typedef typename allocator_type::pointer            pointer;
     typedef typename allocator_type::const_pointer      const_pointer;
     typedef typename allocator_type::reference          reference;
     typedef typename allocator_type::const_reference    const_reference;
-    
+
     typedef Ptrit<value_type, difference_type, pointer,
                 reference, pointer, reference>          iterator;
     typedef Ptrit<value_type, difference_type,
-                const_pointer, const_reference, 
+                const_pointer, const_reference,
                 const_pointer, const_reference>         const_iterator;
     typedef ft::reverse_iterator<iterator>              reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>        const_reverse_iterator;
@@ -55,7 +55,7 @@ public:
     //----CONSTRUCTOR-----
     //--------------------
     explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-        allocated_memory(0);
+        begin_ = NULL;
         size_ = capacity_ = 0;
     }
 
@@ -69,12 +69,12 @@ public:
 
     explicit vector(const my_vector& x) : vector_base(x.allocator_) {
         allocated_memory(x.size_);
-        if (!copy_values(x.size_, x.begin_)) {
+        if (!copy_values(x.size_, x.begin_, begin_)) {
             throw std::bad_alloc();
         }
         size_ = capacity_ = x.size_;
     }
-    
+
     template <typename InputIterator>
     explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
         typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) : vector_base(alloc) {
@@ -89,8 +89,8 @@ public:
             delete_memory(begin_, capacity_);
         }
     }
-    
-    
+
+
     //--------------------
     //-----ITERATORS------
     //--------------------
@@ -246,18 +246,43 @@ public:
         size_type size_insert  = last - first;
 
         if (size_insert <= 0) {
-            ;
+            return ;
         } else if (max_size() - size() < size_insert) {
             throw std::out_of_range("insert range too long");
-        } else if (capacity() < size() + size_insert) {
-            // аллоцированной памяти не хватает перекопировать элементы в новый
-            // очистить старый вектор
+        } else if (size_insert + size_ > capacity_) {
+            // need allocate new memory
+            size_type new_capacity = (size_ + size_insert) * 2;
+            pointer new_mem = vector_base::allocator_.allocate(new_capacity, 0);
+            size_type size_prefix_old_value = position - begin();
+            try {
+                copy_values(size_prefix_old_value, begin_, new_mem);
+                copy_values(size_insert, new_mem + size_prefix_old_value, first);
+                copy_values(size_ - size_prefix_old_value, begin_ + size_prefix_old_value, new_mem + size_insert + size_prefix_old_value);
+            } catch(...) {
+                delete_memory(new_mem, new_capacity);
+                throw;
+            }
 
-        } else if (end() - position < size_insert) {
-            //разрушить объекты с posit до end
-            //создать обьекты
+            if (size()) {
+                destroy_values(begin_, size_);
+            }
+            if (capacity()) {
+                delete_memory(begin_, capacity_);
+            }
+
+            begin_ = new_mem;
+            capacity_ = new_capacity;
+            size_ += size_insert;
         } else {
-            //скопировать обьекты 
+            // dont allocate new memory
+            size_type size_prefix_old_value = position - begin();
+            size_type size_postfix_old_value = end() - position;
+            my_vector tmp(begin(), end());
+            destroy_values(position, size_postfix_old_value);
+            copy_values(size_insert, first, position);
+            copy_values(size_postfix_old_value, tmp.begin(), begin() + size_insert + size_prefix_old_value);
+            size_ += size_insert;
+
         }
     }
 
@@ -269,32 +294,42 @@ public:
 
     void insert(iterator position, size_type size_insert, const value_type& val) {
         if (size_insert <= 0) {
-            ;
+            return ;
         } else if (max_size() - size() < size_insert) {
             throw std::out_of_range("insert range too long");
-        } else if (capacity() < size() + size_insert) {
-            size_type new_capacity = max_size() - size_insert / 2 < size_insert ? 
-                0 : size_insert + size_insert / 2;
-            if (new_capacity < size() + size_insert) {
-                new_capacity = size() + size_insert;
-            }
-            pointer tmp_mem = vector_base::allocator_.allocate(new_capacity, 0);
-            pointer tmp_val;
+        } else if (size_insert + size_ > capacity_) {
+
+            size_type new_capacity = (size_ + size_insert) * 2;
+            pointer new_mem = vector_base::allocator_.allocate(new_capacity, 0);
+            size_type size_prefix_old_value = position - begin();
             try {
-               
-
+                copy_values(size_prefix_old_value, begin_, new_mem);
+                create_values(size_insert, new_mem + size_prefix_old_value, val);
+                copy_values(size_ - size_prefix_old_value, begin_ + size_prefix_old_value, new_mem + size_insert + size_prefix_old_value);
             } catch(...) {
-                
+                delete_memory(new_mem, new_capacity);
+                throw;
             }
-            // аллоцированной памяти не хватает
 
-            // перекопировать элементы в новый
-            // очистить старый вектор
-        } else if (end() - position < size_insert) {
-            //разрушить объекты с posit до end
-            //создать обьекты
+            if (size()) {
+                destroy_values(begin_, size_);
+            }
+            if (capacity()) {
+                delete_memory(begin_, capacity_);
+            }
+
+            begin_ = new_mem;
+            capacity_ = new_capacity;
+            size_ += size_insert;
         } else {
-            //скопировать обьекты
+            // dont allocate new memory
+            size_type size_prefix_old_value = position - begin();
+            size_type size_postfix_old_value = end() - position;
+            my_vector tmp(*this);
+            destroy_values(position.base(), size_postfix_old_value);
+            create_values(size_insert, position.base(), val);
+            copy_values(size_postfix_old_value, tmp.begin().base() + size_prefix_old_value, begin().base() + size_insert + size_prefix_old_value);
+            size_ += size_insert;
         }
     }
 
@@ -315,13 +350,15 @@ public:
     }
 
     void swap (my_vector& x) {
-
+        std::swap(begin_, x.begin_);
+        std::swap(size_, x.size_);
+        std::swap(capacity_, x.capacity_);
     }
 
     void clear() {
         erase(begin(), end());
     }
-    
+
     //--------------------
     //----PRIVATE_FUN-----
     //--------------------
@@ -359,14 +396,14 @@ private:
         }
     }
 
-    bool copy_values(size_type n, pointer begin_to_fill) {
-        pointer tmp = begin_to_fill;
+    bool copy_values(size_type n, pointer src, pointer dst) {
+        pointer tmp = dst;
         try {
-            for (; 0 < n; --n, ++tmp) {
-                vector_base::allocator_.construct(tmp, *tmp);
+            for (; 0 < n; --n, ++dst, ++src) {
+                vector_base::allocator_.construct(dst, *src);
             }
         } catch (...) {
-            destroy_values(begin_to_fill, tmp - begin_to_fill);
+            destroy_values(tmp, dst - tmp);
             return false;
         }
         return true;
