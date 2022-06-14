@@ -12,7 +12,7 @@ Vec& construct_ft_vector(Vec& vector, Args&&... args) {
     return vector;
 }
 
-inline void Test1() {
+inline void TestConstruct() {
     // Инициализация конструктором по умолчанию
     {
         ft::vector<int> v;
@@ -114,7 +114,7 @@ inline void Test1() {
     }
 }
 
-inline void Test2() {
+inline void TestInsert() {
     // push_back
     {
         ft::vector<int> v(1);
@@ -307,8 +307,8 @@ void TestReserveMethod() {
 
 
 int test_ft_vector() {
-    Test1();
-    Test2();
+    TestConstruct();
+    TestInsert();
     TestReserveConstructor();
     TestReserveMethod();
 }

@@ -16,7 +16,7 @@ set(SOURCES
 
 add_library(_ftcontainers SHARED ${SOURCES})
 
-# option(BUILD_TEST "Build Tests" ON)
+option(BUILD_TEST "Build Tests" ON)
 
 if(BUILD_TEST)
     add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
