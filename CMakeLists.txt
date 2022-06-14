@@ -6,11 +6,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -std=c++98")
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_vector/
+    ${CMAKE_CURRENT_SOURCE_DIR}/ft_stack/
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_iterator/
 )
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_vector/ft_vector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ft_stack/ft_stack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_iterator/ft_iterator.cpp
 )
 

@@ -2,7 +2,6 @@
 #define FT_VECTOR_H_
 
 #include <iostream>
-
 #include <memory>
 #include <stdexcept>
 #include "ft_iterator.hpp"
@@ -135,6 +134,7 @@ public:
         }
         my_vector tmp(other);
         swap(tmp);
+        return *this;
     }
 
     void reserve(size_type new_capacity) {
