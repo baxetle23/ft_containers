@@ -100,8 +100,8 @@ inline void TestConstruct() {
         // Пустой вектор
         {
             ft::vector<int> v;
-            assert(v.begin() == NULL);
-            assert(v.end() == NULL);
+            assert(v.begin().base() == NULL);
+            assert(v.end().base() == NULL);
         }
 
         // Непустой вектор
@@ -306,7 +306,7 @@ void TestReserveMethod() {
 }
 
 
-int test_ft_vector() {
+void test_ft_vector() {
     TestConstruct();
     TestInsert();
     TestReserveConstructor();
