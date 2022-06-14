@@ -2,6 +2,7 @@
 #define FT_ITERATOR_H_
 
 #include <utility>
+#include <cstddef>
 
 namespace ft {
 
@@ -19,7 +20,7 @@ struct Int_iterator_tag {};
 //--------------------
 //------ITERATOR------
 //--------------------
-template <typename C, typename T, typename D = std::ptrdiff_t, typename Pt = T*, typename Rt = T&>
+template <typename C, typename T, typename D = ptrdiff_t, typename Pt = T*, typename Rt = T&>
 struct iterator {
     typedef C   iterator_category;
     typedef T   value_type;
@@ -51,7 +52,7 @@ template <typename T>
 struct iterator_traits<T*> {
     typedef random_access_iterator_tag  iterator_category;
     typedef T                           value_type;
-    typedef std::ptrdiff_t              difference_type;
+    typedef ptrdiff_t              difference_type;
     typedef T*                          pointer;
     typedef T&                          reference;
 };
@@ -60,7 +61,7 @@ template <typename T>
 struct iterator_traits<const T*> {
     typedef random_access_iterator_tag  iterator_category;
     typedef T                           value_type;
-    typedef std::ptrdiff_t              difference_type;
+    typedef ptrdiff_t              difference_type;
     typedef const T*                    pointer;
     typedef const T&                    reference;
 };
@@ -139,24 +140,29 @@ struct	enable_if{};
 template<class T>
 struct enable_if<true, T> {typedef T type;};
 
+struct false_type {
+    operator bool() const  { return false; }
+};
+
+struct true_type {
+    operator bool() const  { return true; }
+};
 
 template<class T>
-struct	is_integral : std::false_type{};
-template<> struct	is_integral<int>: std::true_type{};
-template<> struct	is_integral<char>: std::true_type{};
-template<> struct	is_integral<bool>: std::true_type{};
-template<> struct	is_integral<char16_t>: std::true_type{};
-template<> struct	is_integral<char32_t>: std::true_type{};
-template<> struct	is_integral<wchar_t>: std::true_type{};
-template<> struct	is_integral<signed char>: std::true_type{};
-template<> struct	is_integral<short int>: std::true_type{};
-template<> struct	is_integral<unsigned int>: std::true_type{};
-template<> struct	is_integral<long int>: std::true_type{};
-template<> struct	is_integral<long long int>: std::true_type{};
-template<> struct	is_integral<unsigned char>: std::true_type{};
-template<> struct	is_integral<unsigned short int>: std::true_type{};
-template<> struct	is_integral<unsigned long int>: std::true_type{};
-template<> struct	is_integral<unsigned long long int>: std::true_type{};
+struct	is_integral : false_type{};
+template<> struct	is_integral<int>: true_type{};
+template<> struct	is_integral<char>: true_type{};
+template<> struct	is_integral<bool>: true_type{};
+template<> struct	is_integral<wchar_t>: true_type{};
+template<> struct	is_integral<signed char>: true_type{};
+template<> struct	is_integral<short int>: true_type{};
+template<> struct	is_integral<unsigned int>: true_type{};
+template<> struct	is_integral<long int>: true_type{};
+template<> struct	is_integral<long long int>: true_type{};
+template<> struct	is_integral<unsigned char>: true_type{};
+template<> struct	is_integral<unsigned short int>: true_type{};
+template<> struct	is_integral<unsigned long int>: true_type{};
+template<> struct	is_integral<unsigned long long int>: true_type{};
 
 //--------------------
 //--------Ptrit-------
