@@ -16,6 +16,7 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g -std=c++17")
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test_ft_vector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test_ft_stack.cpp
 )
 
 add_executable(test_containers ${SOURCES})
