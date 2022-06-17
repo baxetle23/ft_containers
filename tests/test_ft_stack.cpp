@@ -42,21 +42,75 @@ void TestSizeStack() {
 }
 
 void TestPushPopStack() {
-  ft::stack<int> mystack;
+    
+    ft::stack<int> mystack;
 
-  for (size_t i = 0; i < 5; ++i) mystack.push(i);
+    for (size_t i = 0; i < 5; ++i) {
+        mystack.push(i);
+        assert(mystack.top() == static_cast<int>(i));
+    }
 
-  std::cout << "Popping out elements...";
-  
-  while (!mystack.empty()) {
-     std::cout << ' ' << mystack.top();
-     mystack.pop();
-  }
-  std::cout << '\n';
+    size_t i = 4;
+    while (!mystack.empty()) {
+        assert(mystack.top() == static_cast<int>(i));
+        mystack.pop();
+        --i;
+    }
+
+    assert(mystack.size() == 0);
+
 }
 
 void TestComparisonStack() {
+    {
+        std::vector<int> first_vector{1,2,3,4,5};
+        ft::stack<int, std::vector<int>> first_stack(first_vector);
 
+        std::vector<int> second_vector{1,2,3,4,5};
+        ft::stack<int, std::vector<int>> second_stack(second_vector);
+
+        assert(first_stack == second_stack);
+    }
+    
+    {
+        std::vector<int> first_vector{1, 2, 3, 4, 5, 6};
+        ft::stack<int, std::vector<int>> first_stack(first_vector);
+
+        std::vector<int> second_vector{1, 2, 3, 4, 5, 5};
+        ft::stack<int, std::vector<int>> second_stack(second_vector);
+
+        assert(first_stack > second_stack);
+    }
+
+    {
+        std::vector<int> first_vector{1, 2, 3, 4, 5, 6};
+        ft::stack<int, std::vector<int>> first_stack(first_vector);
+
+        std::vector<int> second_vector;
+        ft::stack<int, std::vector<int>> second_stack(second_vector);
+
+        assert(first_stack >= second_stack);
+    }
+
+    {
+        std::vector<int> first_vector{1, 2, 3, 4, 5, 6};
+        ft::stack<int, std::vector<int>> first_stack(first_vector);
+
+        std::vector<int> second_vector{1, 2, 4, 0};
+        ft::stack<int, std::vector<int>> second_stack(second_vector);
+
+        assert(first_stack < second_stack);
+    }
+
+    {
+        std::vector<int> first_vector{1, 2, 3, 4, 5, 6};
+        ft::stack<int, std::vector<int>> first_stack(first_vector);
+
+        std::vector<int> second_vector{1, 2, 3, 4, 5, 6};
+        ft::stack<int, std::vector<int>> second_stack(second_vector);
+
+        assert(first_stack <= second_stack);
+    }
 }
 
 void test_ft_stack() {
@@ -64,5 +118,4 @@ void test_ft_stack() {
     TestSizeStack();
     TestPushPopStack();
     TestComparisonStack();
-    std::cout << "test stack\n";
 }
