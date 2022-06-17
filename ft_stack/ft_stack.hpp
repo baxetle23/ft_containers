@@ -8,7 +8,7 @@ namespace ft {
 template <typename T, typename C = ft::vector<T> >
 class stack {
 private:
-    C& container;
+    C container;
 public:
     typedef typename C::value_type value_type;
     typedef typename C::size_type  size_type;
@@ -39,7 +39,7 @@ public:
         container.push_back(element);
     }
 
-    void pop_back() {
+    void pop() {
         container.pop_back();
     }
 

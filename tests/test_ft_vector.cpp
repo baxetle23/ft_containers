@@ -12,7 +12,7 @@ Vec& construct_ft_vector(Vec& vector, Args&&... args) {
     return vector;
 }
 
-inline void TestConstruct() {
+inline void TestConstructVec() {
     // Инициализация конструктором по умолчанию
     {
         ft::vector<int> v;
@@ -114,7 +114,7 @@ inline void TestConstruct() {
     }
 }
 
-inline void TestInsert() {
+inline void TestInsertVec() {
     // push_back
     {
         ft::vector<int> v(1);
@@ -272,13 +272,13 @@ inline void TestInsert() {
     }
 }
 
-void TestReserveConstructor() {
+void TestReserveConstructorVec() {
     ft::vector<int> v(5);
     assert(v.capacity() == 5);
     assert(v.size() == 5);
 }
 
-void TestReserveMethod() {
+void TestReserveMethodVec() {
     ft::vector<int> v;
     // зарезервируем 5 мест в векторе
     v.reserve(5);
@@ -307,8 +307,8 @@ void TestReserveMethod() {
 
 
 void test_ft_vector() {
-    TestConstruct();
-    TestInsert();
-    TestReserveConstructor();
-    TestReserveMethod();
+    TestConstructVec();
+    TestInsertVec();
+    TestReserveConstructorVec();
+    TestReserveMethodVec();
 }
