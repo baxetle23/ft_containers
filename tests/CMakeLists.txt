@@ -17,6 +17,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test_ft_vector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test_ft_stack.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test_ft_map.cpp
 )
 
 add_executable(test_containers ${SOURCES})

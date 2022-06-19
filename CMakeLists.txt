@@ -8,12 +8,16 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_vector/
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_stack/
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_iterator/
+    ${CMAKE_CURRENT_SOURCE_DIR}/ft_map/
+
 )
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_vector/ft_vector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_stack/ft_stack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_iterator/ft_iterator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ft_map/ft_map.cpp
+
 )
 
 add_library(_ftcontainers SHARED ${SOURCES})
