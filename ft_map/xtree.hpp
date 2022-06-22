@@ -10,7 +10,7 @@ protected:
     typedef typename Tr::key_compare        key_compare;
     typedef typename Tr::value_type         value_type;
     typedef typename allocator_type::template
-            rebind<void>::other::pointer Genptr;
+            rebind<void>::other::pointer    Genptr;
 
 struct Node {
     Genptr Left, Right, Parent;
@@ -50,6 +50,7 @@ protected:
     Tree_val (const key_compare& Parg, allocator_type Al) : Tree_ptr<Tr>(Parg, Al), Alval(Al) {
     }
     allocator_type Alval;
+};
 
 template <typename Tr>
 class Tree : public Tree_val<Tr> {
@@ -66,15 +67,15 @@ protected:
     typedef typename Tree_nod<Tr>::Node             Node;
     enum Redbl {Red, Black};
     typedef typename allocator_type::template
-        rebind::<Node>::other::pointer              Nodeptr;
+        rebind<Node>::other::pointer              Nodeptr;
     typedef typename allocator_type::template
-        rebind::<Nodeptr>::other::reference         Nodepref;
+        rebind<Nodeptr>::other::reference         Nodepref;
     typedef typename allocator_type::template
-        rebind::<key_type>::other::const_reference  Keyref;
+        rebind<key_type>::other::const_reference  Keyref;
     typedef typename allocator_type::template
-        rebind::<char>::other::reference            Charref;
+        rebind<char>::other::reference            Charref;
     typedef typename allocator_type::template
-        rebind::<value_type>::other::reference      Vref;
+        rebind<value_type>::other::reference      Vref;
 
     static Charref Color(Nodeptr P) {
         return ((Charref)(*P).Color);
@@ -83,10 +84,32 @@ protected:
         return ((Charref)(*P).Isnil);
     }
     static Keyref Key(Nodeptr P) {
-        return (Kfn()(Value(P)));
+        return ((Keyref)(Value(P)));
     }
-       
-}
+    static Nodepref Left(Nodeptr P) {
+        return ((Nodepref)(*P).Left);
+    }
+    static Nodepref Parent(Nodeptr P) {
+        return ((Nodepref)(*P).Parent);
+    }
+    static Nodepref Right(Nodeptr P) {
+        return ((Nodepref)(*P).Right);
+    }
+    static Vref Value(Nodeptr P) {
+        return ((Vref)(*P).Value);
+    }
+
+public:
+    typedef typename allocator_type::size_type          size_type;
+    typedef typename allocator_type::difference_type    Dift;
+    typedef typename allocator_type::template
+        rebind<value_type>::other::pointer              pointer;
+    typedef typename allocator_type::template
+        rebind<value_type>::other::const_pointer        const_pointer;
+    typedef typename allocator_type::template
+        rebind<value_type>::other::reference            reference;
+    typedef typename allocator_type::template
+        rebind<value_type>::other::_const_reference     const_reference;
 };
 
 
