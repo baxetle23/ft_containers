@@ -1,6 +1,8 @@
 #ifndef XTREE_H_
 #define XTREE_H_
 
+#include "ft_iterator.hpp"
+
 namespace ft {
 
 template<typename Tr>
@@ -55,8 +57,8 @@ protected:
 template <typename Tr>
 class Tree : public Tree_val<Tr> {
 public:
-    typedef Tree<Tr>        Mytree;
-    typedef Tree_val<Tr>    Mybase;
+    typedef Tree<Tr>                    Mytree;
+    typedef Tree_val<Tr>                Mybase;
     typedef typename Tr::key_type       key_type;
     typedef typename Tr::Key_compare    key_compare;
     typedef typename Tr::value_compare  value_compare;
@@ -103,13 +105,40 @@ public:
     typedef typename allocator_type::size_type          size_type;
     typedef typename allocator_type::difference_type    Dift;
     typedef typename allocator_type::template
-        rebind<value_type>::other::pointer              pointer;
+        rebind<value_type>::other::pointer              Tptr;
     typedef typename allocator_type::template
-        rebind<value_type>::other::const_pointer        const_pointer;
+        rebind<value_type>::other::const_pointer        Ctptr;
     typedef typename allocator_type::template
-        rebind<value_type>::other::reference            reference;
+        rebind<value_type>::other::reference            Reft;
     typedef typename allocator_type::template
         rebind<value_type>::other::_const_reference     const_reference;
+    
+    typedef Tptr    pointer;
+    typedef Ctptr   const_pointer;
+    typedef Reft    reference;
+
+
+    //class iterator
+    class iterator;
+    friend class iterator;
+    class iterator : public ft::Bidit<value_type, Dift, Tptr, Reft> {
+    protected:
+        Nodeptr Ptr;
+    public:
+        typedef ft::Bidit<value_type, Dift, Tptr, Reft> Mybase;
+        typedef typename Mybase::iterator_category              iterator_category;
+        typedef typename Mybase::difference_type                deffirence_type;
+        typedef typename Mybase::pointer                        pointer;
+        typedef typename Mybase::reference                      reference;
+    
+        iterator() : Ptr(0) {}
+        iterator(Nodeptr ptr) : Ptr(ptr) {}
+
+        reference operator*() const {
+            return Value(Ptr);
+        }
+    };
+
 };
 
 

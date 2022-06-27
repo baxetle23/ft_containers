@@ -29,8 +29,8 @@ struct iterator {
     typedef Rt  reference;
 };
 
-// template <typename T, typename D, typename Pt, typename Rt>
-// struct Bidit : public iterator<bidirectional_iterator_tag, T, D, Pt, Rt> {};
+template <typename T, typename D, typename Pt, typename Rt>
+struct Bidit : public iterator<bidirectional_iterator_tag, T, D, Pt, Rt> {};
 
 template <typename T, typename D, typename Pt, typename Rt>
 struct Ranit : public iterator<random_access_iterator_tag, T, D, Pt, Rt> {};
