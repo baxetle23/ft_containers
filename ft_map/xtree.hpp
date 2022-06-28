@@ -137,7 +137,68 @@ public:
         reference operator*() const {
             return Value(Ptr);
         }
+
+        Tptr operator->() const {
+            return &**this;
+        }
+        iterator operator++() {
+            Inc();
+            return *this;
+        }
+        iterator operator++(int) {
+            iterator tmp = *this;
+            ++*this;
+            return tmp;
+        }
+        iterator operator--() {
+            Dec();
+            return *this;
+        }
+        iterator operator--(int) {
+            iterator tmp = *this;
+            --*this;
+            return tmp;
+        }
+        bool operator==(const iterator other) const {
+            return Ptr == other.Ptr;
+        }
+        bool operator!=(const iterator other) const {
+            return !(*this == other);
+        }
+        void Dec() {
+            if (isnil(Ptr)) {
+                Ptr == Right(Ptr);
+            } else if (!Isnil(Left(Ptr))) {
+                Ptr = Max(Left(Ptr));
+            } else {
+                Nodeptr P;
+                while(!Isnil(P = Parent(Ptr)) && Ptr == Left(Ptr)) {
+                    Ptr = P;
+                }
+                if (!Isnil(P)) {
+                    Ptr = P;
+                }
+            }
+        }
+        void Inc() {
+            if (Isnil(Ptr)) {
+                ;
+            } else if (Isnil(Right(Ptr))) {
+                Ptr = Min(Right(Ptr));
+            } else {
+                Nodeptr P;
+                while (!Isnil(P = Parent(Ptr)) && Ptr =- Right(P)) {
+                    Ptr = P;
+                }
+                Ptr = P;
+            }
+        }
+        Nodeptr Mynode() const {
+            return Ptr;
+        }
     };
+
+    //class const_iterator
 
 };
 
