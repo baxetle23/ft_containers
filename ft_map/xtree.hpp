@@ -123,7 +123,7 @@ public:
     typedef Tree<Tr>                    Mytree;
     typedef Tree_val<Tr>                Mybase;
     typedef typename Tr::key_type       key_type;
-    typedef typename Tr::Key_compare    key_compare;
+    typedef typename Tr::key_compare    key_compare;
     typedef typename Tr::value_compare  value_compare;
     typedef typename Tr::value_type     value_type;
     typedef typename Tr::allocator_type allocator_type;
@@ -174,8 +174,10 @@ public:
     typedef typename allocator_type::template
         rebind<value_type>::other::reference            Reft;
     typedef typename allocator_type::template
-        rebind<value_type>::other::_const_reference     const_reference;
+        rebind<value_type>::other::const_reference     const_reference;
     
+
+    typedef Dift    difference_type;
     typedef Tptr    pointer;
     typedef Ctptr   const_pointer;
     typedef Reft    reference;
@@ -190,7 +192,7 @@ public:
     public:
         typedef ft::Bidit<value_type, Dift, Tptr, Reft> Mybase;
         typedef typename Mybase::iterator_category              iterator_category;
-        typedef typename Mybase::difference_type                deffirence_type;
+        typedef typename Mybase::difference_type                difference_type;
         typedef typename Mybase::pointer                        pointer;
         typedef typename Mybase::reference                      reference;
     
@@ -270,7 +272,7 @@ public:
     public:
         typedef ft::Bidit<value_type, Dift, Ctptr, const_reference> Mybase;
         typedef typename Mybase::iterator_category                  iterator_category;
-        typedef typename Mybase::difference_type                    deffirence_type;
+        typedef typename Mybase::difference_type                    difference_type;
         typedef typename Mybase::pointer                            pointer;
         typedef typename Mybase::reference                          reference;
     
@@ -342,8 +344,8 @@ public:
         }
     };
 
-    typedef std::reverse_iterator<iterator> reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef std::reverse_iterator<iterator>             reverse_iterator;
+    typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
     typedef ft::pair<iterator, bool>                    Pairib;
     typedef ft::pair<iterator, iterator>                Pairii;
     typedef ft::pair<const_iterator, const_iterator>    Paircc;
@@ -382,7 +384,18 @@ public:
     const_iterator end() const {
 
     }
-    //add reverse_iterator
+    reverse_iterator rbegin() {
+
+    }
+    const_reverse_iterator rbegin() const {
+
+    }
+    reverse_iterator rend() {
+
+    }
+    const_reverse_iterator rend() const {
+
+    }
 
 
     size_type size() const {
@@ -398,12 +411,66 @@ public:
 
     }
     key_compare key_comp() const {
-        return comp;
+    
     }
     value_compare value_comp() const {
 
     }
+    Pairib insert(const value_type& val) {
 
+    }
+    iterator insert(iterator P, const value_type& val) {
+
+    }
+    template<typename It>
+    void insert(It F, It L) {
+
+    }
+    iterator erase(iterator P) {
+
+    }
+    iterator erase(iterator F, iterator L) {
+
+    }
+    size_type erase(const key_type& X) {
+
+    }
+    void erase(const key_type *F, const key_type *L) {
+
+    }
+    void clear() {
+
+    }
+    iterator find(const key_type& Kv) {
+
+    }
+    const_iterator find(const key_type& Kv) const {
+
+    }
+    size_type count(const key_type& Kv) const {
+
+    }
+    iterator lower_bound(const key_type& Kv) {
+
+    }
+    const_iterator lower_bound(const key_type& Kv) const {
+
+    }
+    iterator upper_bound(const key_type& Kv) {
+
+    }
+    const_iterator upper_bound(const key_type& Kv) const {
+
+    }
+    Pairii equal_range(const key_type& Kv) {
+
+    }
+    Paircc equal_range(const key_type& Kv) const {
+
+    }
+    void swap(Mytree& X) {
+        
+    }
 
 protected:
     void Copy(const Mytree& other) {

@@ -11,7 +11,7 @@ include_directories(
 add_link_options(-l_ftcontainers)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../build/)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g -std=c++17")
+set(CMAKE_CXX_FLAGS " -g -std=c++17")
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
