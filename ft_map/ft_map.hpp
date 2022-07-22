@@ -1,84 +1,1059 @@
-#ifndef FT_MAP_H_
-#define FT_MAP_H_
 
-#include "xtree.hpp"
+#ifndef FT_MAP_HPP
+#define FT_MAP_HPP
 
-namespace ft {
+#include "ft_iterator.hpp"
+
+#include <iostream>
+#include <cstddef>
+#include <limits>
+
+#ifndef DEBUG_MODE
+# define DEBUG_MODE 0
+#endif
 
 
-template<typename K, typename T, typename Pr, typename Ax, bool Mfl> 
-class Tmap_traits {
-public:
-    typedef K key_type;
-    typedef ft::pair<const K, T> value_type;
-    typedef Pr key_compare;
-    typedef typename Ax::template rebind<value_type>::other allocator_type;
+namespace ft	{
 
-    Tmap_traits() : comp() {
 
+//--------------------
+//-----CLASS_PAIR-----
+//--------------------
+
+template <typename T1, typename T2>
+struct pair {
+    typedef T1 first_type;
+    typedef T2 second_type;
+
+    first_type  first;
+    second_type second;
+
+    pair() : first(), second() {
     }
-    Tmap_traits(Pr Parg) : comp(Parg) {
 
+    template<class U, class V>
+    pair (const pair<U,V>& pr) : first(pr.first), second(pr.second) {
     }
 
+    pair (const first_type& a, const second_type& b) : first(a), second(b) {
+    }
 
-    class value_compare : public std::binary_function<value_type, value_type, bool> {
-        friend class Tmap_traits<K, T, Pr, Ax, Mfl>;
-    public:
-        bool operator() (const value_type& X, const value_type& Y) const {
-            return(comp(X.first, Y.first));
+    pair& operator=(const pair<first_type, second_type>& other) {
+        if (*this == other) {
+            return *this;
         }
-        value_compare(key_compare Pred) : comp(Pred) {}
-    protected:
-        key_compare comp;
-    };
-
-    struct Kfn {
-        const K& operator() (const value_type& X) const {
-            return X.first;
-        }
-    };
-
-    Pr comp;
+        this->second = other.second;
+        this->first = other.first;
+        return *this;
+    }
 };
 
-template<typename K, typename T, typename Pr = std::less<K>, typename A = std::allocator<ft::pair<const K, T> > >
-class map : public Tree<Tmap_traits<K, T, Pr, A, false> > {
-public:
-    typedef map<K, T, Pr, A>                            Myt;
-    typedef Tree<Tmap_traits<K, T, Pr, A, false> >      Mybase;
-    typedef K                                           key_type;
-    typedef T                                           mapped_type;
-    typedef T                                           referent_type;
-    typedef Pr                                          key_compare;
-    typedef typename Mybase::value_compare              value_compare;
-    typedef typename Mybase::allocator_type             allocator_type;
-    typedef typename Mybase::size_type                  size_type;
-    typedef typename Mybase::difference_type            difference_type;
-    typedef typename Mybase::pointer                    pointer;
-    typedef typename Mybase::const_pointer              const_pointer;
-    typedef typename Mybase::reference                  reference;
-    typedef typename Mybase::const_reference            const_reference;
-    typedef typename Mybase::iterator                   iterator;
-    typedef typename Mybase::const_iterator             const_iterator;
-    typedef typename Mybase::reverse_iterator           reverse_iterator;
-    typedef typename Mybase::const_reverse_iterator     const_reverse_iterator;
-    typedef typename Mybase::value_type                 value_type;
-
-    map() : Mybase(key_compare(), allocator_type()) {}
-    explicit map(const key_compare& Pred) : Mybase(Pred, allocator_type()) {}
-    map(const key_compare& Pred, const allocator_type& Al) : Mybase(Pred, Al) {}
-    template<class It>
-    map(It F, It L) {
-
-    }
-
+template<class T1, class T2>
+ft::pair<T1, T2> make_pair(T1 t, T2 u) {
+    return ft::pair<T1, T2>(t, u);
 };
 
+template<class T1, class T2>
+bool	operator==(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+    return (lhs.first == rhs.first) && (lhs.second == rhs.second);
+};
+template<class T1, class T2>
+bool	operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+    return lhs != rhs;
+};
+template<class T1, class T2>
+bool	operator<(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+    return ((lhs.first < rhs.first) || (!(rhs.first < lhs.first) && (lhs.second < rhs.second)));
+};
+template<class T1, class T2>
+bool	operator<=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+    return !(rhs < lhs);
+};
+template<class T1, class T2>
+bool	operator>(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+    return rhs < lhs;
+};
+template<class T1, class T2>
+bool	operator>=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+    return !(lhs < rhs);
+};
 
-// template <typename Key, typename T, typename Pred = std::less<Key>, 
+///////////////////////////////////////////////////////////////////////////////////
+
+template<class Key, class T, class Compare, typename map_node>
+class map_iterator : public ft::iterator<ft::bidirectional_iterator_tag, ft::pair<const Key, T> > {
+
+template< typename _k, typename _t, typename _c, typename _a>
+friend class map;
+
+public:
+
+    typedef	Compare										key_compare;
+
+    typedef typename ft::iterator<ft::bidirectional_iterator_tag, ft::pair<const Key, T> >			iterator;
+    typedef typename iterator::value_type										value_type;
+    typedef typename iterator::difference_type									difference_type;
+    typedef typename iterator::reference										reference;
+    typedef typename iterator::pointer											pointer;
+
+    map_iterator( map_node* ptr = NULL, map_node* dumbNode = NULL,
+        const key_compare& comp = key_compare() ) :	_ptr(ptr),
+                                                    _btreeDumdNode(dumbNode),
+                                                    _comp(comp)		{}
+
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) :	_ptr(itSrc.getPtr()),
+                                                _btreeDumdNode(itSrc.getDumbNode()),
+                                                _comp(itSrc.getComp())		{}
+
+    ~map_iterator( void )	{}
+
+    map_iterator&
+    operator=( const map_iterator& src )	{
+        if (*this != src)	{
+            _ptr = src.getPtr();
+            _btreeDumdNode = src.getDumbNode();
+            _comp = src.getComp();
+        }
+        return (*this);
+    }
+
+    map_iterator&
+    operator++( void ) {
+
+        if (_ptr == _btreeDumdNode)
+            _ptr = _btreeDumdNode->left;
+        else if (isLastNode(_ptr) == true)
+            _ptr = _btreeDumdNode;
+        else if (isLeaf(_ptr) == true)	{
+            if (_ptr == _ptr->parent->left)
+                _ptr = _ptr->parent;
+            else
+                getNextBranch();
+        }
+        else	{
+            if (_ptr->right != NULL)
+                _ptr = getFarLeft(_ptr->right);
+            else
+                getNextBranch();
+        }
+        return *this;
+    }
+
+    map_iterator
+    operator++( int ) {
+        map_iterator tmp(*this);
+        operator++();
+        return tmp;
+    }
+
+    map_iterator&
+    operator--( void ) {
+
+        if (_ptr == _btreeDumdNode)
+            _ptr = _btreeDumdNode->right;
+        else if (isFirstNode(_ptr) == true)
+            _ptr = _btreeDumdNode;
+        else if (isLeaf(_ptr) == true)	{
+            if (_ptr == _ptr->parent->right)
+                _ptr = _ptr->parent;
+            else
+                getPreviousBranch();
+        }
+        else	{
+            if (_ptr->left != NULL)
+                _ptr = getFarRight(_ptr->left);
+            else
+                getPreviousBranch();
+        }
+        return *this;
+    }
+
+    map_iterator
+    operator--( int ) {
+        map_iterator tmp(*this);
+        operator--();
+        return tmp;
+    }
 
 
-}//namespace ft
+    bool
+    operator==(const map_iterator<Key, T, Compare, map_node>& rhs) const	{ return _ptr==rhs.getPtr(); }
+
+    bool
+    operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const	{ return _ptr!=rhs.getPtr(); }
+
+    pointer
+    operator->()	const		{ return (&_ptr->item); }
+
+    reference
+    operator*()	const			{ return (_ptr->item); }
+
+private:
+
+    /**
+     * @brief Pointer holding the address of the map_iterator element.
+    */
+    map_node*			_ptr;
+    map_node*			_btreeDumdNode;
+    Compare				_comp;
+
+    map_node*			getDumbNode(void) const { return (_btreeDumdNode);	}
+    Compare				getComp(void) const 	{ return (_comp);	}
+    map_node*			getPtr(void) const 		{ return (_ptr);	}
+    map_node*			getPosParent(void) const	{
+
+        if (_ptr != NULL)
+            return (_ptr->parent);
+        return (NULL);
+    }
+
+
+    void
+    getNextBranch( void )	{
+
+        Key				startKey = _ptr->item.first;
+        map_node*		cursor = _ptr->parent;
+
+        while (cursor != NULL && _comp(cursor->item.first, startKey) == true)
+            cursor = cursor->parent;
+        _ptr = cursor;
+    }
+
+    void
+    getPreviousBranch( void )	{
+
+        Key				startKey = _ptr->item.first;
+        map_node*		cursor = _ptr->parent;
+
+        while (cursor != NULL && _comp(startKey, cursor->item.first) == true)
+            cursor = cursor->parent;
+        _ptr = cursor;
+    }
+
+    static	map_node*
+    getFarLeft( map_node* cursor )	{
+
+        while (cursor != NULL && cursor->left != NULL)
+            cursor = cursor->left;
+        return (cursor);
+    }
+
+    static	map_node*
+    getFarRight( map_node* cursor )	{
+
+        while (cursor != NULL && cursor->right != NULL)
+            cursor = cursor->right;
+        return (cursor);
+    }
+
+    bool
+    isFirstNode( map_node* p )	{
+        return (p == _btreeDumdNode->left);
+    }
+
+    bool
+    isLastNode( map_node* p )	{
+        return (p == _btreeDumdNode->right);
+    }
+
+    static	bool
+    isLeaf(map_node* node)	{
+        return (node->left == NULL && node->right == NULL);
+    }
+
+
+}; //----------------- Class map_iterator
+
+
+
+
+	template< typename T>
+	class map_node	{
+
+		public:
+			map_node( const T& itemSrc ) :			item(itemSrc),
+													left(NULL),
+													parent(NULL),
+													right(NULL)	 {}
+			~map_node( void ) {}
+
+			T				item;
+			map_node*		left;
+			map_node*		parent;
+			map_node*		right;
+			bool			color;
+	};
+
+	template< 	class Key,
+				class T,
+				class Compare = std::less<Key>,
+				class Allocator = std::allocator< ft::map_node<ft::pair<const Key, T> > > >
+	class map {
+
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** MEMBER TYPES            ******************************************.
+.******************************************************************************.
+.******************************************************************************/
+
+		public:
+
+			typedef Key										key_type;
+			typedef T										mapped_type;
+			typedef ft::pair<const key_type, mapped_type>	value_type;
+			typedef	Compare									key_compare;
+
+			typedef size_t									size_type;
+			typedef std::ptrdiff_t							difference_type;
+
+			typedef Allocator								allocator_type;
+			typedef typename Allocator::reference			reference;
+			typedef typename Allocator::const_reference		const_reference;
+			typedef typename Allocator::pointer				pointer;
+			typedef typename Allocator::const_pointer		const_pointer;
+
+			typedef typename ft::map_iterator<Key, T, Compare, ft::map_node<value_type> >	iterator;
+
+            typedef typename ft::reverse_iterator<map_iterator<Key, T, Compare, ft::map_node<value_type> > > reverse_iterator;
+
+		private:
+
+			typedef typename ft::map_node<value_type>		node_type;
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** NESTED CLASSES          ******************************************.
+.******************************************************************************.
+.******************************************************************************/
+
+		public:
+
+			class value_compare	{
+
+				friend class map<Key, T, Compare, Allocator>;
+
+				public:
+					typedef	bool		result_type;
+					typedef	value_type	first_argument_type;
+					typedef	value_type	second_argument_type;
+
+					bool
+					operator()( const value_type& lhs, const value_type& rhs ) const {
+						return (_comp(lhs.first, rhs.first));
+					}
+
+				protected:
+					value_compare( Compare c ) : _comp(c) {}
+
+					Compare				_comp;
+			};
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** CONSTRUCTORS DESTRUCTOR           ********************************.
+.******************************************************************************.
+.******************************************************************************/
+
+
+		public:
+			/**
+			 * @brief Default Constructor
+			*/
+			explicit
+			map( const Compare& comp = key_compare(),
+			const allocator_type & userAlloc = allocator_type() )	: 	_head(NULL),
+																		_dumbNode(NULL),
+																		_size(0),
+																		_allocNode(userAlloc),
+																		_comp(comp)				{
+				if (DEBUG_MODE == 1)
+					std::cout << "CONSTRUCTOR --> DEFAULT explicit " << __func__ << std::endl;
+
+				btree_init_dumbNode();
+			}
+
+
+			/**
+			 * @brief Range Constructor
+			*/
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last,
+				const key_compare& comp = key_compare(),
+				const allocator_type& userAlloc = allocator_type() ) :	_head(NULL),
+																		_dumbNode(NULL),
+																		_size(0),
+																		_allocNode(userAlloc),
+																		_comp(comp)				{
+
+				if (DEBUG_MODE == 1)
+					std::cout << "CONSTRUCTOR --> Range ! " << __func__ << std::endl;
+				insert(first, last);
+			}
+
+			/**
+			 * @brief Copy Constructor
+			*/
+			map( map const & src ) :	_head(NULL),
+												_dumbNode(NULL),
+												_size(0),
+												_allocNode(src._allocNode),
+												_comp(src._comp)				{
+
+				if (DEBUG_MODE == 1)
+					std::cout << "CONSTRUCTOR --> copy " << __func__ << std::endl;
+
+				insert(src.begin(), src.end());
+			}
+
+
+			~map( void )	{
+
+				if (DEBUG_MODE == 1) std::cout << "DESTRUCTOR --> " << __func__ << std::endl;
+				clear();
+			}
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** PRIVATE VARIABLES  ***********************************************.
+.******************************************************************************.
+.******************************************************************************/
+
+			protected:
+				node_type*				_head;
+				node_type*				_dumbNode; // allow to point to element after last.
+				size_type				_size;
+				allocator_type		 	_allocNode;
+				Compare	const			_comp;
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** 🚧  DEBUG 🚧             ******************************************.
+.******************************************************************************.
+.******************************************************************************/
+
+			private:
+			// public:
+				void
+				debugPrintTree()	{
+
+					if (DEBUG_MODE < 2)
+						return ;
+					std::cout << "***********************************" << std::endl;
+					std::cout << __func__ << "_head is pointing to:  " << _head << std::endl;
+					std::cout << "_dumbNode is... : " << std::endl;
+					debugPrintNode(_dumbNode);
+					std::cout << "Printing tree of size  " << _size << std::endl;
+
+					std::cout << "****************ITERATORES*******************" << std::endl;
+					iterator it = begin();
+					iterator ite = end();
+
+					for(; it != ite; ++it)	{
+						debugPrintNode(it.getPtr());
+					}
+					std::cout << "***********************************" << std::endl;
+				}
+
+				static void
+				debugPrintNode( node_type* node )	{
+
+					if (DEBUG_MODE < 2)
+						return ;
+					if (node != NULL)	{
+						std::cout << std::endl;
+						std::cout << __func__ << std::endl;
+						std::cout << "NODE   " << node << std::endl;
+						std::cout << "--- KEY    " << node->item.first << std::endl;
+						std::cout << "--  VAL    " << node->item.second << std::endl;
+						std::cout << "parent " << node->parent;
+						if (node->parent != NULL)
+							std::cout << "(" << node->parent->item.first << ";" << node->parent->item.second << ")" << std::endl;
+						else
+							std::cout << "--> THIS NODE IS _HEAD" << std::endl;
+
+						std::cout << " left   " << node->left;
+						if (node->left != NULL)
+							std::cout << "(" << node->left->item.first << ";" << node->left->item.second << ")";
+						std::cout << std::endl;
+						std::cout << " right  " << node->right;
+						if (node->right != NULL)
+							std::cout << "(" << node->right->item.first << ";" << node->right->item.second << ")";
+						std::cout << std::endl;
+						std::cout << std::endl;
+					}
+					else
+						std::cout << __func__ << "Called with null" << std::endl;
+
+				}
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** PUBLIC MEMBER FUNCTIONS ******************************************.
+.******************************************************************************.
+.******************************************************************************/
+
+		public:
+
+			bool		empty( void ) const		{ return (_size == 0); }
+			size_type	size( void ) const 		{ return (_size); }
+			size_type	max_size( void ) const	{ return this->_allocNode.max_size(); }
+
+			iterator
+			begin( void ) 			{
+				if (empty() == false && _dumbNode != NULL)
+					return (iterator(_dumbNode->left, _dumbNode, _comp));
+				return (iterator(_dumbNode, _dumbNode, _comp));
+			}
+
+			// const_iterator
+			// begin( void ) const		{
+			// 	if (empty() == false && _dumbNode != NULL)
+			// 		return (const_iterator(_dumbNode->left, _dumbNode, _comp));
+			// 	return (const_iterator(_dumbNode, _dumbNode, _comp));
+			// }
+
+			iterator
+			end( void ) 	 		{
+				return (iterator(_dumbNode, _dumbNode, _comp));
+			}
+
+			// const_iterator
+			// end( void ) const 		{
+			// 	return (const_iterator(_dumbNode, _dumbNode, _comp));
+			// }
+
+			reverse_iterator		rbegin( void ) 			{	return reverse_iterator(end()); }
+			// const_reverse_iterator	rbegin( void ) 	const	{	return const_reverse_iterator(end()); }
+			reverse_iterator		rend( void ) 			{	return reverse_iterator(begin()); }
+			// const_reverse_iterator	rend( void ) 	const	{	return const_reverse_iterator(begin()); }
+
+			iterator
+			find (const key_type& k)	{
+
+				if (empty() == true)
+					return(iterator());
+				node_type*	nodeFound = locateNode(_head, k);
+				if (nodeFound == NULL)
+					return (end());
+				return (iterator(nodeFound, _dumbNode, _comp));
+			}
+
+			// const_iterator
+			// find (const key_type& k) const	{
+
+			// 	if (empty() == true)
+			// 		return(const_iterator());
+			// 	node_type* const	nodeFound = locateNode(_head, k);
+			// 	if (nodeFound == NULL)
+			// 		return (end());
+			// 	return (const_iterator(nodeFound, _dumbNode, _comp));
+			// }
+
+			size_type
+			count (const key_type& k) const	{
+				return (find(k) != end() ? 1 : 0);
+			}
+
+			iterator
+			lower_bound (const key_type& k) {
+
+				if (empty() == true)
+					return(iterator());
+
+				node_type* const	nodeFound = locateBound(_head, k, isLowerBoundNode);
+
+				if (nodeFound == NULL)
+					return (end());
+				else
+					return (iterator(nodeFound, _dumbNode, _comp));
+			}
+
+			// const_iterator
+			// lower_bound (const key_type& k) const	{
+
+			// 	if (empty() == true)
+			// 		return(const_iterator());
+
+			// 	node_type* const	nodeFound = locateBound(_head, k, isLowerBoundNode);
+
+			// 	if (nodeFound == NULL)
+			// 		return (end());
+			// 	else
+			// 		return (const_iterator(nodeFound, _dumbNode, _comp));
+			// }
+
+
+			iterator
+			upper_bound (const key_type& k) {
+
+				if (empty() == true)
+					return(iterator());
+
+				node_type* const	nodeFound = locateBound(_head, k, isUpperBoundNode);
+
+				if (nodeFound == NULL)
+					return (end());
+				else
+					return (iterator(nodeFound, _dumbNode, _comp));
+			}
+
+			// const_iterator
+			// upper_bound (const key_type& k) const	{
+
+			// 	if (empty() == true)
+			// 		return(const_iterator());
+
+			// 	node_type* const	nodeFound = locateBound(_head, k, isUpperBoundNode);
+
+			// 	if (nodeFound == NULL)
+			// 		return (end());
+			// 	else
+			// 		return (const_iterator(nodeFound, _dumbNode, _comp));
+			// }
+
+
+			ft::pair<iterator,iterator>
+			equal_range (const key_type& k)	{
+
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
+
+			// ft::pair<const_iterator, const_iterator>
+			// equal_range (const key_type& k) const	{
+
+			// 	return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			// }
+
+
+			ft::pair<iterator, bool>
+			insert(const value_type& val)	{
+				return(btree_insert_data(NULL, &_head, val));
+			}
+
+
+			iterator
+			insert (iterator position, const value_type& val)	{
+
+				node_type*	posPtr = position.getPtr();
+				if (posPtr == NULL)
+					return (iterator());
+				if (position != end() && lower_bound(val.first) == position)	{
+					if (DEBUG_MODE >= 2) std::cout << __func__ << ":	 Insert with optimization." << std::endl;
+					return (btree_insert_data(posPtr->parent, &posPtr, val).first);
+				}
+				else
+					return (btree_insert_data(NULL, &_head, val).first);
+			}
+
+			template <class InputIterator>
+ 			void
+			insert (InputIterator first, InputIterator last)	{
+
+				for (; first != last; first++)
+					insert(*first);
+			}
+
+			void
+			erase( iterator position )	{
+
+				node_type*	deadNode = position.getPtr();
+				node_type*	deadNodeLeft = deadNode->left;
+				node_type*	deadNodeRight = deadNode->right;
+				node_type*	singleChild = getSingleChild(deadNode);
+
+				if (deadNode == NULL)
+					return;
+				if (isLeaf(deadNode) == true)
+					detachFromParent(deadNode);
+				else if (singleChild != NULL)
+					detachFromParent(deadNode, singleChild);
+				else	{
+					detachFromParent(deadNode, deadNodeLeft);
+					node_type*	farRight = getFarRight(deadNodeLeft);
+					deadNodeRight->parent = farRight;
+					farRight->right = deadNodeRight;
+				}
+				decSize();
+				btree_update_dumbNode();
+				freeNode(deadNode);
+			}
+
+			size_type
+			erase( const key_type& k )	{
+
+				node_type*	target = btree_search_key(_head, k);
+				if (target == NULL)
+					return 0;
+				else	{
+					erase(iterator(target, _dumbNode, _comp));
+					return 1;
+				}
+			}
+
+			void
+			erase (iterator first, iterator last)	{
+
+				iterator next;
+				while (first != last)	{
+					next = first;
+					next++;
+					erase(first);
+					first = next;
+				}
+			}
+
+			void
+			swap (map& src)	{
+
+				if (this->_head != src._head)	{
+					node_type*				tmp_head = src._head;
+					node_type*				tmp_dumbNode = src._dumbNode;
+					size_t					tmp_size = src._size;
+					allocator_type 			tmp_allocNode = src._allocNode;
+
+					src._head = this->_head;
+					src._dumbNode = this->_dumbNode;
+					src._size = this->_size;
+					src._allocNode = this->_allocNode;
+
+					this->_head = tmp_head;
+					this->_dumbNode = tmp_dumbNode;
+					this->_size = tmp_size;
+					this->_allocNode = tmp_allocNode;
+				}
+			}
+
+			map&
+			operator= (const map& src)	{
+
+				if (this->_head != src._head)	{
+
+					clear();
+
+					if (src.empty() == false)	{
+						if (src.size() > 2)	{
+							iterator half = src.begin();
+							for (size_t i = 0; i < src.size() / 2; i++)
+								half++;
+							insert(*half);
+						}
+						insert(src.begin(), src.end());
+					}
+				}
+				return *this;
+			}
+
+			mapped_type&
+			operator[]( const key_type& key )	{
+
+				value_type					insertValue(key, mapped_type());
+				ft::pair<iterator, bool>	ret = insert(insertValue);
+				return (ret.first->second);
+			}
+
+			void
+			clear( void )			{
+
+				if (DEBUG_MODE >= 3) std::cout << __func__ << std::endl;
+				freeAllNodes(_head);
+				freeNode(_dumbNode);
+				_size = 0;
+				_head = NULL;
+				_dumbNode = NULL;
+			}
+
+            value_compare	value_comp( void ) const	{ return value_compare(_comp); }
+            key_compare		key_comp( void ) const		{ return key_compare(_comp); }
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** PRIVATE MEMBER FUNCTIONS AND HELPERS  ****************************.
+.******************************************************************************.
+.******************************************************************************/
+
+ 		private:
+
+			void
+			detachFromParent( node_type* node, node_type* newChild = NULL )	{
+				node_type* parent = node->parent;
+				if (parent != NULL)	{
+					if (parent->left == node)
+						parent->left = newChild;
+					else if (parent->right == node)
+						parent->right = newChild;
+				}
+				else if (node == _head)
+					_head = newChild;
+				if (newChild != NULL)
+					newChild->parent = parent;
+				node->parent = NULL;
+			}
+
+			static node_type*
+			getSingleChild( node_type* node )	{
+
+				if (node->right != NULL && node->left == NULL)
+					return (node->right);
+				else if (node->right == NULL && node->left != NULL)
+					return (node->left);
+				else
+					return (NULL);
+			}
+
+			node_type*
+			locateBound( node_type* root, const key_type& key, bool (*isBound)(node_type*, const key_type&) ) const	{
+
+				if (root == _head && isBound(_dumbNode->left, key) == true)
+					return (_dumbNode->left);
+				else if (root == _head && isBound(_dumbNode->right, key) == false)
+					return (NULL);
+
+				node_type* candidate = root;
+				node_type* bestCandidate = NULL;
+				while (candidate != NULL)	{
+					if (isBound(candidate, key) == true)	{
+						bestCandidate = candidate;
+						candidate = candidate->left;
+					}
+					else
+						candidate = candidate->right;
+				}
+				return (bestCandidate);
+			}
+
+			node_type*
+			locateNode( node_type* root, const key_type& key ) const	{
+
+				if (root != NULL)	{
+					if (_comp(key, root->item.first) == true)
+						return (locateNode(root->left, key));
+					else if (isEqualKey(key, root->item.first) == false)
+						return (locateNode(root->right, key));
+					else
+						return (root);
+				}
+				else
+					return (NULL);
+			}
+
+			static bool
+			isLowerBoundNode( node_type* node, const key_type& key ) {
+
+			typename ft::map<Key, T, Compare> tmpObj;
+			typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
+
+				return (node != NULL
+					&& (cmpFunc(node->item.first, key) == false
+						|| isEqualKey(node->item.first, key) == true));
+			}
+
+			static bool
+			isUpperBoundNode( node_type* node, const key_type& key ) {
+				typename ft::map<Key, T, Compare> tmpObj;
+				typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
+				return (node != NULL && cmpFunc(key, node->item.first) == true);
+			}
+
+			void
+			btree_update_dumbNode( void )	{
+				if (_dumbNode == NULL)
+					btree_init_dumbNode();
+				if (empty() == true)	{
+					_dumbNode->left = _head;
+					_dumbNode->right = _head;
+				}
+				else	{
+					_dumbNode->left = getFarLeft(_head);
+					_dumbNode->right = getFarRight(_head);
+				}
+			}
+
+			void
+			btree_init_dumbNode( void )	{
+
+				if (_dumbNode == NULL)	{
+					_dumbNode = _allocNode.allocate(1);
+					_allocNode.construct(_dumbNode, node_type(value_type()));
+					_dumbNode->left = _head;
+					_dumbNode->right = _head;
+				}
+			}
+
+			node_type*
+			btree_create_node(node_type* parent, key_type k, mapped_type val)	{
+
+				node_type*	newNode = _allocNode.allocate(1);
+				_allocNode.construct(newNode, node_type(value_type(k ,val)));
+				newNode->parent = parent;
+				return (newNode);
+			}
+
+				/**
+				 * @brief Actual function inserting new data in the tree.
+				 * @param parent shall be NULL to insert anywhere from the head.
+				 * @param root starting point in the tree to look for a suitable potision.
+				 * @param pairSrc pair to be inserted.
+				*/
+
+			ft::pair<iterator, bool>
+			btree_insert_data(node_type* parent, node_type **root, value_type pairSrc)	{
+
+				if (*root != NULL)	{
+					node_type* tree = *root;
+					if (_comp(pairSrc.first, tree->item.first) == true)
+						return (btree_insert_data(tree, &tree->left, pairSrc));
+					else if (isEqualKey(pairSrc.first, tree->item.first) == false)
+						return (btree_insert_data(tree, &tree->right, pairSrc));
+					else
+						return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, _comp), false));
+				}
+				else	{
+					*root = btree_create_node(parent, pairSrc.first, pairSrc.second);
+					incSize();
+					btree_update_dumbNode();
+					return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, _comp), true));
+				}
+			}
+
+			node_type*
+			btree_search_key(node_type* root, const key_type& targetKey)	{
+
+				if (root != NULL)	{
+					if (_comp(targetKey, root->item.first) == true)
+						return (btree_search_key(root->left, targetKey));
+					else if (_comp(root->item.first, targetKey) == true)
+						return (btree_search_key(root->right, targetKey));
+				}
+				return (root);
+			}
+
+			static node_type*
+			getFarLeft( node_type* cursor )  {
+
+				while (cursor != NULL && cursor->left != NULL)
+					cursor = cursor->left;
+				return (cursor);
+			}
+
+			static node_type*
+			getFarRight( node_type* cursor )  {
+
+				while (cursor != NULL && cursor->right != NULL)
+					cursor = cursor->right;
+				return (cursor);
+			}
+
+			static bool
+			isLeaf(node_type* node)  {
+				return (node->left == NULL && node->right == NULL);
+			}
+
+			static bool
+			isEqualKey(const Key& existingKey, const Key& newKey) {
+				typename ft::map<Key, T, Compare> tmpObj;
+				typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
+				return (cmpFunc(existingKey, newKey) == false
+				&& cmpFunc(newKey, existingKey) == false);
+			}
+
+			size_t
+			incSize( size_t inc = 1 ) { _size += inc; return(_size); }
+
+			size_t
+			decSize( size_t inc = 1 ) { _size -= inc; return(_size); }
+
+			void
+			freeNode( node_type* node)	{
+				if (node != NULL)	{
+					_allocNode.destroy(node);
+					_allocNode.deallocate(node, 1);
+				}
+			}
+
+			void
+			freeAllNodes( node_type* root )	{
+
+				if (root == NULL)
+					return;
+				freeAllNodes(root->left);
+				freeAllNodes(root->right);
+				freeNode(root);
+			}
+
+			allocator_type
+			get_allocator() const	{
+				return _allocNode();
+			}
+
+		}; // -------------------------------------------------------- Class map
+
+/******************************************************************************.
+.******************************************************************************.
+.*********** PUBLIC NON MEMBER FUNCTIONS     **********************************.
+.******************************************************************************.
+.******************************************************************************/
+
+		template <class Key, class T, class Compare, class Alloc>
+		void
+		swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)	{
+
+			x.swap(y);
+		};
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator==( const map<Key,T,Compare,Alloc>& lhs,
+						const map<Key,T,Compare,Alloc>& rhs )	{
+
+			if (lhs.size() != rhs.size())
+				return false;
+
+			typename ft::map<Key,T,Compare,Alloc>::const_iterator lhs_it = lhs.begin();
+			typename ft::map<Key,T,Compare,Alloc>::const_iterator rhs_it = rhs.begin();
+
+			for (;lhs_it != lhs.end() && rhs_it != rhs.end(); lhs_it++, rhs_it++)	{
+				if (lhs_it->first != rhs_it->first || lhs_it->second != rhs_it->second)
+					return false;
+			}
+			if (lhs_it != lhs.end() || rhs_it != rhs.end())
+				return false;
+			return true;
+
+		}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator!=( const map<Key,T,Compare,Alloc>& lhs,
+						const map<Key,T,Compare,Alloc>& rhs )	{
+			return !(lhs == rhs);
+		}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator<( const map<Key,T,Compare,Alloc>& lhs,
+						const map<Key,T,Compare,Alloc>& rhs )	{
+
+			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator>=( const map<Key,T,Compare,Alloc>& lhs,
+						const map<Key,T,Compare,Alloc>& rhs )	{
+
+			return !(lhs < rhs);
+		}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator<=( const map<Key,T,Compare,Alloc>& lhs,
+						const map<Key,T,Compare,Alloc>& rhs )	{
+			return (lhs < rhs || lhs == rhs);
+		}
+
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator>( const map<Key,T,Compare,Alloc>& lhs,
+						const map<Key,T,Compare,Alloc>& rhs )	{
+
+			return !(lhs <= rhs);
+
+		}
+}
 
 #endif
