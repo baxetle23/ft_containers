@@ -22,6 +22,7 @@ namespace ft	{
 
 template <typename T1, typename T2>
 struct pair {
+
     typedef T1 first_type;
     typedef T2 second_type;
 
@@ -78,132 +79,132 @@ bool	operator>=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
     return !(lhs < rhs);
 };
 
-///////////////////////////////////////////////////////////////////////////////////
 
+
+//--------------------
+//----map_iterator----
+//--------------------
 template<class Key, class T, class Compare, typename map_node>
 class map_iterator : public ft::iterator<ft::bidirectional_iterator_tag, ft::pair<const Key, T> > {
 
-template< typename _k, typename _t, typename _c, typename _a>
+template< typename k, typename t, typename c, typename a>
 friend class map;
 
 public:
 
-    typedef	Compare										key_compare;
-
+    typedef	Compare										                                            key_compare;
     typedef typename ft::iterator<ft::bidirectional_iterator_tag, ft::pair<const Key, T> >			iterator;
-    typedef typename iterator::value_type										value_type;
-    typedef typename iterator::difference_type									difference_type;
-    typedef typename iterator::reference										reference;
-    typedef typename iterator::pointer											pointer;
+    typedef typename iterator::value_type										                    value_type;
+    typedef typename iterator::difference_type									                    difference_type;
+    typedef typename iterator::reference										                    reference;
+    typedef typename iterator::pointer											                    pointer;
 
-    map_iterator( map_node* ptr = NULL, map_node* dumbNode = NULL,
-        const key_compare& comp = key_compare() ) :	_ptr(ptr),
-                                                    _btreeDumdNode(dumbNode),
-                                                    _comp(comp)		{}
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :	
+        ptr(ptr),
+        _btreeDumdNode(dumbNode),
+        _comp(comp) {
+    }
 
-    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) :	_ptr(itSrc.getPtr()),
-                                                _btreeDumdNode(itSrc.getDumbNode()),
-                                                _comp(itSrc.getComp())		{}
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+        ptr(itSrc.getPtr()),
+        _btreeDumdNode(itSrc.getDumbNode()),
+        _comp(itSrc.getComp()) {
+    }
 
-    ~map_iterator( void )	{}
+    ~map_iterator(void) {}
 
-    map_iterator&
-    operator=( const map_iterator& src )	{
+    map_iterator& operator=(const map_iterator& src)	{
         if (*this != src)	{
-            _ptr = src.getPtr();
+            ptr = src.getPtr();
             _btreeDumdNode = src.getDumbNode();
             _comp = src.getComp();
         }
         return (*this);
     }
 
-    map_iterator&
-    operator++( void ) {
-
-        if (_ptr == _btreeDumdNode)
-            _ptr = _btreeDumdNode->left;
-        else if (isLastNode(_ptr) == true)
-            _ptr = _btreeDumdNode;
-        else if (isLeaf(_ptr) == true)	{
-            if (_ptr == _ptr->parent->left)
-                _ptr = _ptr->parent;
-            else
+    map_iterator& operator++(void) {
+        if (ptr == _btreeDumdNode) {
+            ptr = _btreeDumdNode->left;
+        } else if (isLastNode(ptr) == true) {
+            ptr = _btreeDumdNode;
+        } else if (isLeaf(ptr) == true)	{
+            if (ptr == ptr->parent->left) {
+                ptr = ptr->parent;
+            } else {
                 getNextBranch();
-        }
-        else	{
-            if (_ptr->right != NULL)
-                _ptr = getFarLeft(_ptr->right);
-            else
+            }
+        } else {
+            if (ptr->right != NULL) {
+                ptr = getFarLeft(ptr->right);
+            } else {
                 getNextBranch();
+            }
         }
         return *this;
     }
 
-    map_iterator
-    operator++( int ) {
+    map_iterator operator++(int) {
         map_iterator tmp(*this);
         operator++();
         return tmp;
     }
 
-    map_iterator&
-    operator--( void ) {
-
-        if (_ptr == _btreeDumdNode)
-            _ptr = _btreeDumdNode->right;
-        else if (isFirstNode(_ptr) == true)
-            _ptr = _btreeDumdNode;
-        else if (isLeaf(_ptr) == true)	{
-            if (_ptr == _ptr->parent->right)
-                _ptr = _ptr->parent;
-            else
+    map_iterator& operator--(void) {
+        if (ptr == _btreeDumdNode) {
+            ptr = _btreeDumdNode->right;
+        } else if (isFirstNode(ptr) == true) {
+            ptr = _btreeDumdNode;
+        } else if (isLeaf(ptr) == true)	{
+            if (ptr == ptr->parent->right) {
+                ptr = ptr->parent;
+            } else {
                 getPreviousBranch();
-        }
-        else	{
-            if (_ptr->left != NULL)
-                _ptr = getFarRight(_ptr->left);
-            else
+            }
+        } else {
+            if (ptr->left != NULL) {
+                ptr = getFarRight(ptr->left);
+            } else {
                 getPreviousBranch();
+            }
         }
         return *this;
     }
 
-    map_iterator
-    operator--( int ) {
+    map_iterator operator--(int) {
         map_iterator tmp(*this);
         operator--();
         return tmp;
     }
 
 
-    bool
-    operator==(const map_iterator<Key, T, Compare, map_node>& rhs) const	{ return _ptr==rhs.getPtr(); }
+    bool operator==(const map_iterator<Key, T, Compare, map_node>& rhs) const {
+        return ptr==rhs.getPtr(); 
+    }
 
-    bool
-    operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const	{ return _ptr!=rhs.getPtr(); }
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+        return ptr!=rhs.getPtr(); 
+    }
 
-    pointer
-    operator->()	const		{ return (&_ptr->item); }
+    pointer operator->() const { 
+        return (&ptr->item); 
+    }
 
-    reference
-    operator*()	const			{ return (_ptr->item); }
+    reference operator*() const { 
+        return (ptr->item); 
+    }
 
 private:
-
-    /**
-     * @brief Pointer holding the address of the map_iterator element.
-    */
-    map_node*			_ptr;
+    map_node*			ptr;
     map_node*			_btreeDumdNode;
     Compare				_comp;
 
     map_node*			getDumbNode(void) const { return (_btreeDumdNode);	}
     Compare				getComp(void) const 	{ return (_comp);	}
-    map_node*			getPtr(void) const 		{ return (_ptr);	}
+    map_node*			getPtr(void) const 		{ return (ptr);	}
     map_node*			getPosParent(void) const	{
 
-        if (_ptr != NULL)
-            return (_ptr->parent);
+        if (ptr != NULL)
+            return (ptr->parent);
         return (NULL);
     }
 
@@ -211,23 +212,23 @@ private:
     void
     getNextBranch( void )	{
 
-        Key				startKey = _ptr->item.first;
-        map_node*		cursor = _ptr->parent;
+        Key				startKey = ptr->item.first;
+        map_node*		cursor = ptr->parent;
 
         while (cursor != NULL && _comp(cursor->item.first, startKey) == true)
             cursor = cursor->parent;
-        _ptr = cursor;
+        ptr = cursor;
     }
 
     void
     getPreviousBranch( void )	{
 
-        Key				startKey = _ptr->item.first;
-        map_node*		cursor = _ptr->parent;
+        Key				startKey = ptr->item.first;
+        map_node*		cursor = ptr->parent;
 
         while (cursor != NULL && _comp(startKey, cursor->item.first) == true)
             cursor = cursor->parent;
-        _ptr = cursor;
+        ptr = cursor;
     }
 
     static	map_node*
@@ -260,9 +261,7 @@ private:
     isLeaf(map_node* node)	{
         return (node->left == NULL && node->right == NULL);
     }
-
-
-}; //----------------- Class map_iterator
+}; 
 
 
 
