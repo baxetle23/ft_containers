@@ -101,32 +101,32 @@ public:
 
     map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :	
         ptr(ptr),
-        _btreeDumdNode(dumbNode),
-        _comp(comp) {
+        btreeDumdNode(dumbNode),
+        comp(comp) {
     }
 
     map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
         ptr(itSrc.getPtr()),
-        _btreeDumdNode(itSrc.getDumbNode()),
-        _comp(itSrc.getComp()) {
+        btreeDumdNode(itSrc.getDumbNode()),
+        comp(itSrc.getComp()) {
     }
 
     ~map_iterator(void) {}
 
-    map_iterator& operator=(const map_iterator& src)	{
+    map_iterator& operator=(const map_iterator& src) {
         if (*this != src)	{
             ptr = src.getPtr();
-            _btreeDumdNode = src.getDumbNode();
-            _comp = src.getComp();
+            btreeDumdNode = src.getDumbNode();
+            comp = src.getComp();
         }
         return (*this);
     }
 
     map_iterator& operator++(void) {
-        if (ptr == _btreeDumdNode) {
-            ptr = _btreeDumdNode->left;
+        if (ptr == btreeDumdNode) {
+            ptr = btreeDumdNode->left;
         } else if (isLastNode(ptr) == true) {
-            ptr = _btreeDumdNode;
+            ptr = btreeDumdNode;
         } else if (isLeaf(ptr) == true)	{
             if (ptr == ptr->parent->left) {
                 ptr = ptr->parent;
@@ -150,10 +150,10 @@ public:
     }
 
     map_iterator& operator--(void) {
-        if (ptr == _btreeDumdNode) {
-            ptr = _btreeDumdNode->right;
+        if (ptr == btreeDumdNode) {
+            ptr = btreeDumdNode->right;
         } else if (isFirstNode(ptr) == true) {
-            ptr = _btreeDumdNode;
+            ptr = btreeDumdNode;
         } else if (isLeaf(ptr) == true)	{
             if (ptr == ptr->parent->right) {
                 ptr = ptr->parent;
@@ -195,70 +195,72 @@ public:
 
 private:
     map_node*			ptr;
-    map_node*			_btreeDumdNode;
-    Compare				_comp;
+    map_node*			btreeDumdNode;
+    Compare				comp;
 
-    map_node*			getDumbNode(void) const { return (_btreeDumdNode);	}
-    Compare				getComp(void) const 	{ return (_comp);	}
-    map_node*			getPtr(void) const 		{ return (ptr);	}
-    map_node*			getPosParent(void) const	{
+	map_node* getDumbNode() const { 
+		return (btreeDumdNode);	
+	}
 
-        if (ptr != NULL)
+	Compare getComp() const {
+		return (comp);	
+	}
+
+	map_node* getPtr() const {
+		return (ptr);
+	}
+
+	map_node* getPosParent() const{
+        if (ptr != NULL) {
             return (ptr->parent);
+		}
         return (NULL);
     }
 
 
-    void
-    getNextBranch( void )	{
-
+    void getNextBranch() {
         Key				startKey = ptr->item.first;
         map_node*		cursor = ptr->parent;
 
-        while (cursor != NULL && _comp(cursor->item.first, startKey) == true)
+        while (cursor != NULL && comp(cursor->item.first, startKey) == true) {
             cursor = cursor->parent;
+		}
         ptr = cursor;
     }
 
-    void
-    getPreviousBranch( void )	{
-
+    void getPreviousBranch() {
         Key				startKey = ptr->item.first;
         map_node*		cursor = ptr->parent;
 
-        while (cursor != NULL && _comp(startKey, cursor->item.first) == true)
+        while (cursor != NULL && comp(startKey, cursor->item.first) == true) {
             cursor = cursor->parent;
+		}
         ptr = cursor;
     }
 
-    static	map_node*
-    getFarLeft( map_node* cursor )	{
-
-        while (cursor != NULL && cursor->left != NULL)
+    static	map_node* getFarLeft( map_node* cursor ) {
+        while (cursor != NULL && cursor->left != NULL) {
             cursor = cursor->left;
+		}
         return (cursor);
     }
 
-    static	map_node*
-    getFarRight( map_node* cursor )	{
-
-        while (cursor != NULL && cursor->right != NULL)
+    static	map_node* getFarRight( map_node* cursor ) {
+        while (cursor != NULL && cursor->right != NULL) {
             cursor = cursor->right;
+		}
         return (cursor);
     }
 
-    bool
-    isFirstNode( map_node* p )	{
-        return (p == _btreeDumdNode->left);
+    bool isFirstNode( map_node* p )	{
+        return (p == btreeDumdNode->left);
     }
 
-    bool
-    isLastNode( map_node* p )	{
-        return (p == _btreeDumdNode->right);
+    bool isLastNode( map_node* p )	{
+        return (p == btreeDumdNode->right);
     }
 
-    static	bool
-    isLeaf(map_node* node)	{
+    static	bool isLeaf(map_node* node)	{
         return (node->left == NULL && node->right == NULL);
     }
 }; 
@@ -266,59 +268,53 @@ private:
 
 
 
-	template< typename T>
-	class map_node	{
+template< typename T>
+class map_node	{
+public:
+	map_node( const T& itemSrc ) :	
+		item(itemSrc),
+		left(NULL),
+		parent(NULL),
+		right(NULL) {	
+	}
 
-		public:
-			map_node( const T& itemSrc ) :			item(itemSrc),
-													left(NULL),
-													parent(NULL),
-													right(NULL)	 {}
-			~map_node( void ) {}
+	~map_node() {
+	}
 
-			T				item;
-			map_node*		left;
-			map_node*		parent;
-			map_node*		right;
-			bool			color;
-	};
-
-	template< 	class Key,
-				class T,
-				class Compare = std::less<Key>,
-				class Allocator = std::allocator< ft::map_node<ft::pair<const Key, T> > > >
-	class map {
+	T				item;
+	map_node*		left;
+	map_node*		parent;
+	map_node*		right;
+	bool			color;
+};
 
 
-/******************************************************************************.
-.******************************************************************************.
-.*********** MEMBER TYPES            ******************************************.
-.******************************************************************************.
-.******************************************************************************/
+template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator< ft::map_node<ft::pair<const Key, T> > > >
+class map {
 
-		public:
+public:
 
-			typedef Key										key_type;
-			typedef T										mapped_type;
-			typedef ft::pair<const key_type, mapped_type>	value_type;
-			typedef	Compare									key_compare;
+	typedef Key										key_type;
+	typedef T										mapped_type;
+	typedef ft::pair<const key_type, mapped_type>	value_type;
+	typedef	Compare									key_compare;
 
-			typedef size_t									size_type;
-			typedef std::ptrdiff_t							difference_type;
+	typedef size_t									size_type;
+	typedef std::ptrdiff_t							difference_type;
 
-			typedef Allocator								allocator_type;
-			typedef typename Allocator::reference			reference;
-			typedef typename Allocator::const_reference		const_reference;
-			typedef typename Allocator::pointer				pointer;
-			typedef typename Allocator::const_pointer		const_pointer;
+	typedef Allocator								allocator_type;
+	typedef typename Allocator::reference			reference;
+	typedef typename Allocator::const_reference		const_reference;
+	typedef typename Allocator::pointer				pointer;
+	typedef typename Allocator::const_pointer		const_pointer;
 
-			typedef typename ft::map_iterator<Key, T, Compare, ft::map_node<value_type> >	iterator;
+	typedef typename ft::map_iterator<Key, T, Compare, ft::map_node<value_type> >	iterator;
 
-            typedef typename ft::reverse_iterator<map_iterator<Key, T, Compare, ft::map_node<value_type> > > reverse_iterator;
+	typedef typename ft::reverse_iterator<map_iterator<Key, T, Compare, ft::map_node<value_type> > > reverse_iterator;
 
-		private:
+private:
 
-			typedef typename ft::map_node<value_type>		node_type;
+	typedef typename ft::map_node<value_type>		node_type;
 
 /******************************************************************************.
 .******************************************************************************.
@@ -339,13 +335,13 @@ private:
 
 					bool
 					operator()( const value_type& lhs, const value_type& rhs ) const {
-						return (_comp(lhs.first, rhs.first));
+						return (comp(lhs.first, rhs.first));
 					}
 
 				protected:
-					value_compare( Compare c ) : _comp(c) {}
+					value_compare( Compare c ) : comp(c) {}
 
-					Compare				_comp;
+					Compare				comp;
 			};
 
 /******************************************************************************.
@@ -365,7 +361,7 @@ private:
 																		_dumbNode(NULL),
 																		_size(0),
 																		_allocNode(userAlloc),
-																		_comp(comp)				{
+																		comp(comp)				{
 				if (DEBUG_MODE == 1)
 					std::cout << "CONSTRUCTOR --> DEFAULT explicit " << __func__ << std::endl;
 
@@ -383,7 +379,7 @@ private:
 																		_dumbNode(NULL),
 																		_size(0),
 																		_allocNode(userAlloc),
-																		_comp(comp)				{
+																		comp(comp)				{
 
 				if (DEBUG_MODE == 1)
 					std::cout << "CONSTRUCTOR --> Range ! " << __func__ << std::endl;
@@ -397,7 +393,7 @@ private:
 												_dumbNode(NULL),
 												_size(0),
 												_allocNode(src._allocNode),
-												_comp(src._comp)				{
+												comp(src.comp)				{
 
 				if (DEBUG_MODE == 1)
 					std::cout << "CONSTRUCTOR --> copy " << __func__ << std::endl;
@@ -423,7 +419,7 @@ private:
 				node_type*				_dumbNode; // allow to point to element after last.
 				size_type				_size;
 				allocator_type		 	_allocNode;
-				Compare	const			_comp;
+				Compare	const			comp;
 
 /******************************************************************************.
 .******************************************************************************.
@@ -501,25 +497,25 @@ private:
 			iterator
 			begin( void ) 			{
 				if (empty() == false && _dumbNode != NULL)
-					return (iterator(_dumbNode->left, _dumbNode, _comp));
-				return (iterator(_dumbNode, _dumbNode, _comp));
+					return (iterator(_dumbNode->left, _dumbNode, comp));
+				return (iterator(_dumbNode, _dumbNode, comp));
 			}
 
 			// const_iterator
 			// begin( void ) const		{
 			// 	if (empty() == false && _dumbNode != NULL)
-			// 		return (const_iterator(_dumbNode->left, _dumbNode, _comp));
-			// 	return (const_iterator(_dumbNode, _dumbNode, _comp));
+			// 		return (const_iterator(_dumbNode->left, _dumbNode, comp));
+			// 	return (const_iterator(_dumbNode, _dumbNode, comp));
 			// }
 
 			iterator
 			end( void ) 	 		{
-				return (iterator(_dumbNode, _dumbNode, _comp));
+				return (iterator(_dumbNode, _dumbNode, comp));
 			}
 
 			// const_iterator
 			// end( void ) const 		{
-			// 	return (const_iterator(_dumbNode, _dumbNode, _comp));
+			// 	return (const_iterator(_dumbNode, _dumbNode, comp));
 			// }
 
 			reverse_iterator		rbegin( void ) 			{	return reverse_iterator(end()); }
@@ -535,7 +531,7 @@ private:
 				node_type*	nodeFound = locateNode(_head, k);
 				if (nodeFound == NULL)
 					return (end());
-				return (iterator(nodeFound, _dumbNode, _comp));
+				return (iterator(nodeFound, _dumbNode, comp));
 			}
 
 			// const_iterator
@@ -546,7 +542,7 @@ private:
 			// 	node_type* const	nodeFound = locateNode(_head, k);
 			// 	if (nodeFound == NULL)
 			// 		return (end());
-			// 	return (const_iterator(nodeFound, _dumbNode, _comp));
+			// 	return (const_iterator(nodeFound, _dumbNode, comp));
 			// }
 
 			size_type
@@ -565,7 +561,7 @@ private:
 				if (nodeFound == NULL)
 					return (end());
 				else
-					return (iterator(nodeFound, _dumbNode, _comp));
+					return (iterator(nodeFound, _dumbNode, comp));
 			}
 
 			// const_iterator
@@ -579,7 +575,7 @@ private:
 			// 	if (nodeFound == NULL)
 			// 		return (end());
 			// 	else
-			// 		return (const_iterator(nodeFound, _dumbNode, _comp));
+			// 		return (const_iterator(nodeFound, _dumbNode, comp));
 			// }
 
 
@@ -594,7 +590,7 @@ private:
 				if (nodeFound == NULL)
 					return (end());
 				else
-					return (iterator(nodeFound, _dumbNode, _comp));
+					return (iterator(nodeFound, _dumbNode, comp));
 			}
 
 			// const_iterator
@@ -608,7 +604,7 @@ private:
 			// 	if (nodeFound == NULL)
 			// 		return (end());
 			// 	else
-			// 		return (const_iterator(nodeFound, _dumbNode, _comp));
+			// 		return (const_iterator(nodeFound, _dumbNode, comp));
 			// }
 
 
@@ -685,7 +681,7 @@ private:
 				if (target == NULL)
 					return 0;
 				else	{
-					erase(iterator(target, _dumbNode, _comp));
+					erase(iterator(target, _dumbNode, comp));
 					return 1;
 				}
 			}
@@ -762,8 +758,8 @@ private:
 				_dumbNode = NULL;
 			}
 
-            value_compare	value_comp( void ) const	{ return value_compare(_comp); }
-            key_compare		key_comp( void ) const		{ return key_compare(_comp); }
+            value_compare	value_comp( void ) const	{ return value_compare(comp); }
+            key_compare		key_comp( void ) const		{ return key_compare(comp); }
 
 /******************************************************************************.
 .******************************************************************************.
@@ -825,7 +821,7 @@ private:
 			locateNode( node_type* root, const key_type& key ) const	{
 
 				if (root != NULL)	{
-					if (_comp(key, root->item.first) == true)
+					if (comp(key, root->item.first) == true)
 						return (locateNode(root->left, key));
 					else if (isEqualKey(key, root->item.first) == false)
 						return (locateNode(root->right, key));
@@ -900,18 +896,18 @@ private:
 
 				if (*root != NULL)	{
 					node_type* tree = *root;
-					if (_comp(pairSrc.first, tree->item.first) == true)
+					if (comp(pairSrc.first, tree->item.first) == true)
 						return (btree_insert_data(tree, &tree->left, pairSrc));
 					else if (isEqualKey(pairSrc.first, tree->item.first) == false)
 						return (btree_insert_data(tree, &tree->right, pairSrc));
 					else
-						return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, _comp), false));
+						return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, comp), false));
 				}
 				else	{
 					*root = btree_create_node(parent, pairSrc.first, pairSrc.second);
 					incSize();
 					btree_update_dumbNode();
-					return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, _comp), true));
+					return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, comp), true));
 				}
 			}
 
@@ -919,9 +915,9 @@ private:
 			btree_search_key(node_type* root, const key_type& targetKey)	{
 
 				if (root != NULL)	{
-					if (_comp(targetKey, root->item.first) == true)
+					if (comp(targetKey, root->item.first) == true)
 						return (btree_search_key(root->left, targetKey));
-					else if (_comp(root->item.first, targetKey) == true)
+					else if (comp(root->item.first, targetKey) == true)
 						return (btree_search_key(root->right, targetKey));
 				}
 				return (root);
