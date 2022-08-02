@@ -8,11 +8,6 @@
 #include <cstddef>
 #include <limits>
 
-#ifndef DEBUG_MODE
-# define DEBUG_MODE 0
-#endif
-
-
 namespace ft	{
 
 
@@ -316,110 +311,67 @@ private:
 
 	typedef typename ft::map_node<value_type>		node_type;
 
-/******************************************************************************.
-.******************************************************************************.
-.*********** NESTED CLASSES          ******************************************.
-.******************************************************************************.
-.******************************************************************************/
 
+public:
+
+	class value_compare	{
+		friend class map<Key, T, Compare, Allocator>;
 		public:
+			typedef	bool		result_type;
+			typedef	value_type	first_argument_type;
+			typedef	value_type	second_argument_type;
 
-			class value_compare	{
-
-				friend class map<Key, T, Compare, Allocator>;
-
-				public:
-					typedef	bool		result_type;
-					typedef	value_type	first_argument_type;
-					typedef	value_type	second_argument_type;
-
-					bool
-					operator()( const value_type& lhs, const value_type& rhs ) const {
-						return (comp(lhs.first, rhs.first));
-					}
-
-				protected:
-					value_compare( Compare c ) : comp(c) {}
-
-					Compare				comp;
-			};
-
-/******************************************************************************.
-.******************************************************************************.
-.*********** CONSTRUCTORS DESTRUCTOR           ********************************.
-.******************************************************************************.
-.******************************************************************************/
-
-
-		public:
-			/**
-			 * @brief Default Constructor
-			*/
-			explicit
-			map( const Compare& comp = key_compare(),
-			const allocator_type & userAlloc = allocator_type() )	: 	_head(NULL),
-																		_dumbNode(NULL),
-																		_size(0),
-																		_allocNode(userAlloc),
-																		comp(comp)				{
-				if (DEBUG_MODE == 1)
-					std::cout << "CONSTRUCTOR --> DEFAULT explicit " << __func__ << std::endl;
-
-				btree_init_dumbNode();
+			bool
+			operator()( const value_type& lhs, const value_type& rhs ) const {
+				return (comp(lhs.first, rhs.first));
 			}
 
+		protected:
+			value_compare(Compare c) : comp(c) {}
+			Compare	comp;
+	};
 
-			/**
-			 * @brief Range Constructor
-			*/
-			template <class InputIterator>
-			map (InputIterator first, InputIterator last,
-				const key_compare& comp = key_compare(),
-				const allocator_type& userAlloc = allocator_type() ) :	_head(NULL),
-																		_dumbNode(NULL),
-																		_size(0),
-																		_allocNode(userAlloc),
-																		comp(comp)				{
+	
+	explicit map(const Compare& comp = key_compare(), const allocator_type & userAlloc = allocator_type()) : 
+		head_(NULL),
+		dumbNode_(NULL),
+		size_(0),
+		allocNode_(userAlloc),
+		comp(comp) {
+		btree_init_dumbNode();
+	}
 
-				if (DEBUG_MODE == 1)
-					std::cout << "CONSTRUCTOR --> Range ! " << __func__ << std::endl;
-				insert(first, last);
-			}
+	template <class InputIterator>
+	map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& userAlloc = allocator_type()) :
+		head_(NULL),
+		dumbNode_(NULL),
+		size_(0),
+		allocNode_(userAlloc),
+		comp(comp) {
+		insert(first, last);
+	}
 
-			/**
-			 * @brief Copy Constructor
-			*/
-			map( map const & src ) :	_head(NULL),
-												_dumbNode(NULL),
-												_size(0),
-												_allocNode(src._allocNode),
-												comp(src.comp)				{
+	map(map const & src) : 
+		head_(NULL),
+		dumbNode_(NULL),
+		size_(0),
+		allocNode_(src.allocNode_),
+		comp(src.comp) {
+		insert(src.begin(), src.end());
+	}
 
-				if (DEBUG_MODE == 1)
-					std::cout << "CONSTRUCTOR --> copy " << __func__ << std::endl;
-
-				insert(src.begin(), src.end());
-			}
+	~map() {
+		clear();
+	}
 
 
-			~map( void )	{
 
-				if (DEBUG_MODE == 1) std::cout << "DESTRUCTOR --> " << __func__ << std::endl;
-				clear();
-			}
-
-/******************************************************************************.
-.******************************************************************************.
-.*********** PRIVATE VARIABLES  ***********************************************.
-.******************************************************************************.
-.******************************************************************************/
-
-			protected:
-				node_type*				_head;
-				node_type*				_dumbNode; // allow to point to element after last.
-				size_type				_size;
-				allocator_type		 	_allocNode;
-				Compare	const			comp;
+protected:
+	node_type*				head_;
+	node_type*				dumbNode_; // allow to point to element after last.
+	size_type				size_;
+	allocator_type		 	allocNode_;
+	const Compare			comp;
 
 /******************************************************************************.
 .******************************************************************************.
@@ -427,561 +379,537 @@ private:
 .******************************************************************************.
 .******************************************************************************/
 
-			private:
-			// public:
-				void
-				debugPrintTree()	{
+private:
+// public:
+	void debugPrintTree() {
+		std::cout << "***********************************" << std::endl;
+		std::cout << __func__ << "head_ is pointing to:  " << head_ << std::endl;
+		std::cout << "dumbNode_ is... : " << std::endl;
+		debugPrintNode(dumbNode_);
+		std::cout << "Printing tree of size  " << size_ << std::endl;
 
-					if (DEBUG_MODE < 2)
-						return ;
-					std::cout << "***********************************" << std::endl;
-					std::cout << __func__ << "_head is pointing to:  " << _head << std::endl;
-					std::cout << "_dumbNode is... : " << std::endl;
-					debugPrintNode(_dumbNode);
-					std::cout << "Printing tree of size  " << _size << std::endl;
+		std::cout << "****************ITERATORES*******************" << std::endl;
+		iterator it = begin();
+		iterator ite = end();
 
-					std::cout << "****************ITERATORES*******************" << std::endl;
-					iterator it = begin();
-					iterator ite = end();
+		for(; it != ite; ++it)	{
+			debugPrintNode(it.getPtr());
+		}
+		std::cout << "***********************************" << std::endl;
+	}
 
-					for(; it != ite; ++it)	{
-						debugPrintNode(it.getPtr());
+	static void debugPrintNode(node_type* node)	{
+		if (node != NULL)	{
+			std::cout << std::endl;
+			std::cout << __func__ << std::endl;
+			std::cout << "NODE   " << node << std::endl;
+			std::cout << "--- KEY    " << node->item.first << std::endl;
+			std::cout << "--  VAL    " << node->item.second << std::endl;
+			std::cout << "parent " << node->parent;
+			if (node->parent != NULL)
+				std::cout << "(" << node->parent->item.first << ";" << node->parent->item.second << ")" << std::endl;
+			else
+				std::cout << "--> THIS NODE IS head_" << std::endl;
+
+			std::cout << " left   " << node->left;
+			if (node->left != NULL)
+				std::cout << "(" << node->left->item.first << ";" << node->left->item.second << ")";
+			std::cout << std::endl;
+			std::cout << " right  " << node->right;
+			if (node->right != NULL)
+				std::cout << "(" << node->right->item.first << ";" << node->right->item.second << ")";
+			std::cout << std::endl;
+			std::cout << std::endl;
+		}
+		else
+			std::cout << __func__ << "Called with null" << std::endl;
+	}
+
+
+public:
+
+	bool empty() const {
+		return size_ == 0; 
+	}
+
+	size_type size() const {
+		return size_; 
+	}
+
+	size_type max_size() const {
+		return this->allocNode_.max_size(); 
+	}
+
+	iterator begin( void ) 			{
+		if (empty() == false && dumbNode_ != NULL) {
+			return (iterator(dumbNode_->left, dumbNode_, comp));
+		}
+		return (iterator(dumbNode_, dumbNode_, comp));
+	}
+
+	// const_iterator
+	// begin( void ) const		{
+	// 	if (empty() == false && dumbNode_ != NULL)
+	// 		return (const_iterator(dumbNode_->left, dumbNode_, comp));
+	// 	return (const_iterator(dumbNode_, dumbNode_, comp));
+	// }
+
+	iterator end() {
+		return iterator(dumbNode_, dumbNode_, comp);
+	}
+
+	// const_iterator
+	// end( void ) const 		{
+	// 	return (const_iterator(dumbNode_, dumbNode_, comp));
+	// }
+
+	reverse_iterator rbegin() {
+		return reverse_iterator(end());
+	}
+	// const_reverse_iterator	rbegin( void ) 	const	{	return const_reverse_iterator(end()); }
+	
+	reverse_iterator rend() {
+		return reverse_iterator(begin()); 
+	}
+	// const_reverse_iterator	rend( void ) 	const	{	return const_reverse_iterator(begin()); }
+
+	iterator find (const key_type& k) {
+		if (empty() == true) {
+			return iterator();
+		}
+		node_type*	nodeFound = locateNode(head_, k);
+		if (nodeFound == NULL) {
+			return end();
+		}
+		return iterator(nodeFound, dumbNode_, comp);
+	}
+
+	// const_iterator
+	// find (const key_type& k) const	{
+
+	// 	if (empty() == true)
+	// 		return(const_iterator());
+	// 	node_type* const	nodeFound = locateNode(head_, k);
+	// 	if (nodeFound == NULL)
+	// 		return (end());
+	// 	return (const_iterator(nodeFound, dumbNode_, comp));
+	// }
+
+	size_type count (const key_type& k) const {
+		return (find(k) != end() ? 1 : 0);
+	}
+
+	iterator lower_bound (const key_type& k) {
+		if (empty() == true) {
+			return iterator();
+		}
+
+		node_type* const nodeFound = locateBound(head_, k, isLowerBoundNode);
+
+		if (nodeFound == NULL) {
+			return end(); 
+		} else {
+			return iterator(nodeFound, dumbNode_, comp);
+		}
+	}
+
+	// const_iterator
+	// lower_bound (const key_type& k) const	{
+
+	// 	if (empty() == true)
+	// 		return(const_iterator());
+
+	// 	node_type* const	nodeFound = locateBound(head_, k, isLowerBoundNode);
+
+	// 	if (nodeFound == NULL)
+	// 		return (end());
+	// 	else
+	// 		return (const_iterator(nodeFound, dumbNode_, comp));
+	// }
+
+
+	iterator upper_bound (const key_type& k) {
+
+		if (empty() == true) {
+			return iterator();
+		}
+
+		node_type* const nodeFound = locateBound(head_, k, isUpperBoundNode);
+
+		if (nodeFound == NULL) {
+			return end();
+		} else {
+			return iterator(nodeFound, dumbNode_, comp);
+		}
+	}
+
+	// const_iterator
+	// upper_bound (const key_type& k) const	{
+
+	// 	if (empty() == true)
+	// 		return(const_iterator());
+
+	// 	node_type* const	nodeFound = locateBound(head_, k, isUpperBoundNode);
+
+	// 	if (nodeFound == NULL)
+	// 		return (end());
+	// 	else
+	// 		return (const_iterator(nodeFound, dumbNode_, comp));
+	// }
+
+
+	ft::pair<iterator,iterator> equal_range (const key_type& k)	{
+		return ft::make_pair(lower_bound(k), upper_bound(k));
+	}
+
+	// ft::pair<const_iterator, const_iterator>
+	// equal_range (const key_type& k) const	{
+
+	// 	return (ft::make_pair(lower_bound(k), upper_bound(k)));
+	// }
+
+
+	ft::pair<iterator, bool> insert(const value_type& val) {
+		return(btree_insert_data(NULL, &head_, val));
+	}
+
+	iterator insert (iterator position, const value_type& val)	{
+		node_type*	posPtr = position.getPtr();
+		if (posPtr == NULL) {
+			return (iterator());
+		}
+		if (position != end() && lower_bound(val.first) == position) {
+			return btree_insert_data(posPtr->parent, &posPtr, val).first;
+		} else {
+			return btree_insert_data(NULL, &head_, val).first;
+		}
+	}
+
+	template <class InputIterator>
+	void insert (InputIterator first, InputIterator last) {
+		for (; first != last; first++)
+			insert(*first);
+	}
+
+	void erase( iterator position )	{
+		node_type*	deadNode = position.getPtr();
+		node_type*	deadNodeLeft = deadNode->left;
+		node_type*	deadNodeRight = deadNode->right;
+		node_type*	singleChild = getSingleChild(deadNode);
+
+		if (deadNode == NULL) {
+			return;
+		}
+		if (isLeaf(deadNode) == true) {
+			detachFromParent(deadNode);
+		} else if (singleChild != NULL) {
+			detachFromParent(deadNode, singleChild);
+		} else {
+			detachFromParent(deadNode, deadNodeLeft);
+			node_type*	farRight = getFarRight(deadNodeLeft);
+			deadNodeRight->parent = farRight;
+			farRight->right = deadNodeRight;
+		}
+		decSize();
+		btree_update_dumbNode();
+		freeNode(deadNode);
+	}
+
+	size_type erase(const key_type& k) {
+		node_type*	target = btree_search_key(head_, k);
+		if (target == NULL) {
+			return 0;
+		} else {
+			erase(iterator(target, dumbNode_, comp));
+			return 1;
+		}
+	}
+
+	void erase (iterator first, iterator last)	{
+		iterator next;
+		while (first != last) {
+			next = first;
+			next++;
+			erase(first);
+			first = next;
+		}
+	}
+
+	void swap (map& src) {
+		if (this->head_ != src.head_)	{
+			node_type* tmp_head = src.head_;
+			node_type* tmp_dumbNode = src.dumbNode_;
+			size_t tmp_size = src.size_;
+			allocator_type tmp_allocNode = src.allocNode_;
+
+			src.head_ = this->head_;
+			src.dumbNode_ = this->dumbNode_;
+			src.size_ = this->size_;
+			src.allocNode_ = this->allocNode_;
+
+			this->head_ = tmp_head;
+			this->dumbNode_ = tmp_dumbNode;
+			this->size_ = tmp_size;
+			this->allocNode_ = tmp_allocNode;
+		}
+	}
+
+	map& operator= (const map& src)	{
+
+		if (this->head_ != src.head_) {
+			clear();
+			if (src.empty() == false) {
+				if (src.size() > 2)	{
+					iterator half = src.begin();
+					for (size_t i = 0; i < src.size() / 2; i++) {
+						half++;
 					}
-					std::cout << "***********************************" << std::endl;
+					insert(*half);
 				}
-
-				static void
-				debugPrintNode( node_type* node )	{
-
-					if (DEBUG_MODE < 2)
-						return ;
-					if (node != NULL)	{
-						std::cout << std::endl;
-						std::cout << __func__ << std::endl;
-						std::cout << "NODE   " << node << std::endl;
-						std::cout << "--- KEY    " << node->item.first << std::endl;
-						std::cout << "--  VAL    " << node->item.second << std::endl;
-						std::cout << "parent " << node->parent;
-						if (node->parent != NULL)
-							std::cout << "(" << node->parent->item.first << ";" << node->parent->item.second << ")" << std::endl;
-						else
-							std::cout << "--> THIS NODE IS _HEAD" << std::endl;
-
-						std::cout << " left   " << node->left;
-						if (node->left != NULL)
-							std::cout << "(" << node->left->item.first << ";" << node->left->item.second << ")";
-						std::cout << std::endl;
-						std::cout << " right  " << node->right;
-						if (node->right != NULL)
-							std::cout << "(" << node->right->item.first << ";" << node->right->item.second << ")";
-						std::cout << std::endl;
-						std::cout << std::endl;
-					}
-					else
-						std::cout << __func__ << "Called with null" << std::endl;
-
-				}
-
-/******************************************************************************.
-.******************************************************************************.
-.*********** PUBLIC MEMBER FUNCTIONS ******************************************.
-.******************************************************************************.
-.******************************************************************************/
-
-		public:
-
-			bool		empty( void ) const		{ return (_size == 0); }
-			size_type	size( void ) const 		{ return (_size); }
-			size_type	max_size( void ) const	{ return this->_allocNode.max_size(); }
-
-			iterator
-			begin( void ) 			{
-				if (empty() == false && _dumbNode != NULL)
-					return (iterator(_dumbNode->left, _dumbNode, comp));
-				return (iterator(_dumbNode, _dumbNode, comp));
+				insert(src.begin(), src.end());
 			}
+		}
+		return *this;
+	}
 
-			// const_iterator
-			// begin( void ) const		{
-			// 	if (empty() == false && _dumbNode != NULL)
-			// 		return (const_iterator(_dumbNode->left, _dumbNode, comp));
-			// 	return (const_iterator(_dumbNode, _dumbNode, comp));
-			// }
+	mapped_type& operator[]( const key_type& key ) {
+		value_type insertValue(key, mapped_type());
+		ft::pair<iterator, bool> ret = insert(insertValue);
+		return ret.first->second;
+	}
 
-			iterator
-			end( void ) 	 		{
-				return (iterator(_dumbNode, _dumbNode, comp));
+	void clear() {
+		freeAllNodes(head_);
+		freeNode(dumbNode_);
+		size_ = 0;
+		head_ = NULL;
+		dumbNode_ = NULL;
+	}
+
+	value_compare value_comp() const {
+		return value_compare(comp); 
+	}
+
+	key_compare key_comp() const {
+		return key_compare(comp);
+	}
+
+
+
+/////////////////////////////vot tut ostanovilsya
+private:
+	void detachFromParent(node_type* node, node_type* newChild = NULL)	{
+		node_type* parent = node->parent;
+		if (parent != NULL)	{
+			if (parent->left == node)
+				parent->left = newChild;
+			else if (parent->right == node)
+				parent->right = newChild;
+		}
+		else if (node == head_)
+			head_ = newChild;
+		if (newChild != NULL)
+			newChild->parent = parent;
+		node->parent = NULL;
+	}
+
+	static node_type*
+	getSingleChild( node_type* node )	{
+
+		if (node->right != NULL && node->left == NULL)
+			return (node->right);
+		else if (node->right == NULL && node->left != NULL)
+			return (node->left);
+		else
+			return (NULL);
+	}
+
+	node_type*
+	locateBound( node_type* root, const key_type& key, bool (*isBound)(node_type*, const key_type&) ) const	{
+
+		if (root == head_ && isBound(dumbNode_->left, key) == true)
+			return (dumbNode_->left);
+		else if (root == head_ && isBound(dumbNode_->right, key) == false)
+			return (NULL);
+
+		node_type* candidate = root;
+		node_type* bestCandidate = NULL;
+		while (candidate != NULL)	{
+			if (isBound(candidate, key) == true)	{
+				bestCandidate = candidate;
+				candidate = candidate->left;
 			}
-
-			// const_iterator
-			// end( void ) const 		{
-			// 	return (const_iterator(_dumbNode, _dumbNode, comp));
-			// }
-
-			reverse_iterator		rbegin( void ) 			{	return reverse_iterator(end()); }
-			// const_reverse_iterator	rbegin( void ) 	const	{	return const_reverse_iterator(end()); }
-			reverse_iterator		rend( void ) 			{	return reverse_iterator(begin()); }
-			// const_reverse_iterator	rend( void ) 	const	{	return const_reverse_iterator(begin()); }
-
-			iterator
-			find (const key_type& k)	{
-
-				if (empty() == true)
-					return(iterator());
-				node_type*	nodeFound = locateNode(_head, k);
-				if (nodeFound == NULL)
-					return (end());
-				return (iterator(nodeFound, _dumbNode, comp));
-			}
-
-			// const_iterator
-			// find (const key_type& k) const	{
-
-			// 	if (empty() == true)
-			// 		return(const_iterator());
-			// 	node_type* const	nodeFound = locateNode(_head, k);
-			// 	if (nodeFound == NULL)
-			// 		return (end());
-			// 	return (const_iterator(nodeFound, _dumbNode, comp));
-			// }
-
-			size_type
-			count (const key_type& k) const	{
-				return (find(k) != end() ? 1 : 0);
-			}
-
-			iterator
-			lower_bound (const key_type& k) {
-
-				if (empty() == true)
-					return(iterator());
-
-				node_type* const	nodeFound = locateBound(_head, k, isLowerBoundNode);
-
-				if (nodeFound == NULL)
-					return (end());
-				else
-					return (iterator(nodeFound, _dumbNode, comp));
-			}
-
-			// const_iterator
-			// lower_bound (const key_type& k) const	{
-
-			// 	if (empty() == true)
-			// 		return(const_iterator());
-
-			// 	node_type* const	nodeFound = locateBound(_head, k, isLowerBoundNode);
-
-			// 	if (nodeFound == NULL)
-			// 		return (end());
-			// 	else
-			// 		return (const_iterator(nodeFound, _dumbNode, comp));
-			// }
-
-
-			iterator
-			upper_bound (const key_type& k) {
-
-				if (empty() == true)
-					return(iterator());
-
-				node_type* const	nodeFound = locateBound(_head, k, isUpperBoundNode);
-
-				if (nodeFound == NULL)
-					return (end());
-				else
-					return (iterator(nodeFound, _dumbNode, comp));
-			}
-
-			// const_iterator
-			// upper_bound (const key_type& k) const	{
-
-			// 	if (empty() == true)
-			// 		return(const_iterator());
-
-			// 	node_type* const	nodeFound = locateBound(_head, k, isUpperBoundNode);
-
-			// 	if (nodeFound == NULL)
-			// 		return (end());
-			// 	else
-			// 		return (const_iterator(nodeFound, _dumbNode, comp));
-			// }
-
-
-			ft::pair<iterator,iterator>
-			equal_range (const key_type& k)	{
-
-				return (ft::make_pair(lower_bound(k), upper_bound(k)));
-			}
-
-			// ft::pair<const_iterator, const_iterator>
-			// equal_range (const key_type& k) const	{
-
-			// 	return (ft::make_pair(lower_bound(k), upper_bound(k)));
-			// }
-
-
-			ft::pair<iterator, bool>
-			insert(const value_type& val)	{
-				return(btree_insert_data(NULL, &_head, val));
-			}
-
-
-			iterator
-			insert (iterator position, const value_type& val)	{
-
-				node_type*	posPtr = position.getPtr();
-				if (posPtr == NULL)
-					return (iterator());
-				if (position != end() && lower_bound(val.first) == position)	{
-					if (DEBUG_MODE >= 2) std::cout << __func__ << ":	 Insert with optimization." << std::endl;
-					return (btree_insert_data(posPtr->parent, &posPtr, val).first);
-				}
-				else
-					return (btree_insert_data(NULL, &_head, val).first);
-			}
-
-			template <class InputIterator>
- 			void
-			insert (InputIterator first, InputIterator last)	{
-
-				for (; first != last; first++)
-					insert(*first);
-			}
-
-			void
-			erase( iterator position )	{
-
-				node_type*	deadNode = position.getPtr();
-				node_type*	deadNodeLeft = deadNode->left;
-				node_type*	deadNodeRight = deadNode->right;
-				node_type*	singleChild = getSingleChild(deadNode);
-
-				if (deadNode == NULL)
-					return;
-				if (isLeaf(deadNode) == true)
-					detachFromParent(deadNode);
-				else if (singleChild != NULL)
-					detachFromParent(deadNode, singleChild);
-				else	{
-					detachFromParent(deadNode, deadNodeLeft);
-					node_type*	farRight = getFarRight(deadNodeLeft);
-					deadNodeRight->parent = farRight;
-					farRight->right = deadNodeRight;
-				}
-				decSize();
-				btree_update_dumbNode();
-				freeNode(deadNode);
-			}
-
-			size_type
-			erase( const key_type& k )	{
-
-				node_type*	target = btree_search_key(_head, k);
-				if (target == NULL)
-					return 0;
-				else	{
-					erase(iterator(target, _dumbNode, comp));
-					return 1;
-				}
-			}
-
-			void
-			erase (iterator first, iterator last)	{
-
-				iterator next;
-				while (first != last)	{
-					next = first;
-					next++;
-					erase(first);
-					first = next;
-				}
-			}
-
-			void
-			swap (map& src)	{
-
-				if (this->_head != src._head)	{
-					node_type*				tmp_head = src._head;
-					node_type*				tmp_dumbNode = src._dumbNode;
-					size_t					tmp_size = src._size;
-					allocator_type 			tmp_allocNode = src._allocNode;
-
-					src._head = this->_head;
-					src._dumbNode = this->_dumbNode;
-					src._size = this->_size;
-					src._allocNode = this->_allocNode;
-
-					this->_head = tmp_head;
-					this->_dumbNode = tmp_dumbNode;
-					this->_size = tmp_size;
-					this->_allocNode = tmp_allocNode;
-				}
-			}
-
-			map&
-			operator= (const map& src)	{
-
-				if (this->_head != src._head)	{
-
-					clear();
-
-					if (src.empty() == false)	{
-						if (src.size() > 2)	{
-							iterator half = src.begin();
-							for (size_t i = 0; i < src.size() / 2; i++)
-								half++;
-							insert(*half);
-						}
-						insert(src.begin(), src.end());
-					}
-				}
-				return *this;
-			}
-
-			mapped_type&
-			operator[]( const key_type& key )	{
-
-				value_type					insertValue(key, mapped_type());
-				ft::pair<iterator, bool>	ret = insert(insertValue);
-				return (ret.first->second);
-			}
-
-			void
-			clear( void )			{
-
-				if (DEBUG_MODE >= 3) std::cout << __func__ << std::endl;
-				freeAllNodes(_head);
-				freeNode(_dumbNode);
-				_size = 0;
-				_head = NULL;
-				_dumbNode = NULL;
-			}
-
-            value_compare	value_comp( void ) const	{ return value_compare(comp); }
-            key_compare		key_comp( void ) const		{ return key_compare(comp); }
-
-/******************************************************************************.
-.******************************************************************************.
-.*********** PRIVATE MEMBER FUNCTIONS AND HELPERS  ****************************.
-.******************************************************************************.
-.******************************************************************************/
-
- 		private:
-
-			void
-			detachFromParent( node_type* node, node_type* newChild = NULL )	{
-				node_type* parent = node->parent;
-				if (parent != NULL)	{
-					if (parent->left == node)
-						parent->left = newChild;
-					else if (parent->right == node)
-						parent->right = newChild;
-				}
-				else if (node == _head)
-					_head = newChild;
-				if (newChild != NULL)
-					newChild->parent = parent;
-				node->parent = NULL;
-			}
-
-			static node_type*
-			getSingleChild( node_type* node )	{
-
-				if (node->right != NULL && node->left == NULL)
-					return (node->right);
-				else if (node->right == NULL && node->left != NULL)
-					return (node->left);
-				else
-					return (NULL);
-			}
-
-			node_type*
-			locateBound( node_type* root, const key_type& key, bool (*isBound)(node_type*, const key_type&) ) const	{
-
-				if (root == _head && isBound(_dumbNode->left, key) == true)
-					return (_dumbNode->left);
-				else if (root == _head && isBound(_dumbNode->right, key) == false)
-					return (NULL);
-
-				node_type* candidate = root;
-				node_type* bestCandidate = NULL;
-				while (candidate != NULL)	{
-					if (isBound(candidate, key) == true)	{
-						bestCandidate = candidate;
-						candidate = candidate->left;
-					}
-					else
-						candidate = candidate->right;
-				}
-				return (bestCandidate);
-			}
-
-			node_type*
-			locateNode( node_type* root, const key_type& key ) const	{
-
-				if (root != NULL)	{
-					if (comp(key, root->item.first) == true)
-						return (locateNode(root->left, key));
-					else if (isEqualKey(key, root->item.first) == false)
-						return (locateNode(root->right, key));
-					else
-						return (root);
-				}
-				else
-					return (NULL);
-			}
-
-			static bool
-			isLowerBoundNode( node_type* node, const key_type& key ) {
-
-			typename ft::map<Key, T, Compare> tmpObj;
-			typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
-
-				return (node != NULL
-					&& (cmpFunc(node->item.first, key) == false
-						|| isEqualKey(node->item.first, key) == true));
-			}
-
-			static bool
-			isUpperBoundNode( node_type* node, const key_type& key ) {
-				typename ft::map<Key, T, Compare> tmpObj;
-				typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
-				return (node != NULL && cmpFunc(key, node->item.first) == true);
-			}
-
-			void
-			btree_update_dumbNode( void )	{
-				if (_dumbNode == NULL)
-					btree_init_dumbNode();
-				if (empty() == true)	{
-					_dumbNode->left = _head;
-					_dumbNode->right = _head;
-				}
-				else	{
-					_dumbNode->left = getFarLeft(_head);
-					_dumbNode->right = getFarRight(_head);
-				}
-			}
-
-			void
-			btree_init_dumbNode( void )	{
-
-				if (_dumbNode == NULL)	{
-					_dumbNode = _allocNode.allocate(1);
-					_allocNode.construct(_dumbNode, node_type(value_type()));
-					_dumbNode->left = _head;
-					_dumbNode->right = _head;
-				}
-			}
-
-			node_type*
-			btree_create_node(node_type* parent, key_type k, mapped_type val)	{
-
-				node_type*	newNode = _allocNode.allocate(1);
-				_allocNode.construct(newNode, node_type(value_type(k ,val)));
-				newNode->parent = parent;
-				return (newNode);
-			}
-
-				/**
-				 * @brief Actual function inserting new data in the tree.
-				 * @param parent shall be NULL to insert anywhere from the head.
-				 * @param root starting point in the tree to look for a suitable potision.
-				 * @param pairSrc pair to be inserted.
-				*/
-
-			ft::pair<iterator, bool>
-			btree_insert_data(node_type* parent, node_type **root, value_type pairSrc)	{
-
-				if (*root != NULL)	{
-					node_type* tree = *root;
-					if (comp(pairSrc.first, tree->item.first) == true)
-						return (btree_insert_data(tree, &tree->left, pairSrc));
-					else if (isEqualKey(pairSrc.first, tree->item.first) == false)
-						return (btree_insert_data(tree, &tree->right, pairSrc));
-					else
-						return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, comp), false));
-				}
-				else	{
-					*root = btree_create_node(parent, pairSrc.first, pairSrc.second);
-					incSize();
-					btree_update_dumbNode();
-					return (ft::pair<iterator, bool>(iterator(*root, _dumbNode, comp), true));
-				}
-			}
-
-			node_type*
-			btree_search_key(node_type* root, const key_type& targetKey)	{
-
-				if (root != NULL)	{
-					if (comp(targetKey, root->item.first) == true)
-						return (btree_search_key(root->left, targetKey));
-					else if (comp(root->item.first, targetKey) == true)
-						return (btree_search_key(root->right, targetKey));
-				}
+			else
+				candidate = candidate->right;
+		}
+		return (bestCandidate);
+	}
+
+	node_type*
+	locateNode( node_type* root, const key_type& key ) const	{
+
+		if (root != NULL)	{
+			if (comp(key, root->item.first) == true)
+				return (locateNode(root->left, key));
+			else if (isEqualKey(key, root->item.first) == false)
+				return (locateNode(root->right, key));
+			else
 				return (root);
-			}
+		}
+		else
+			return (NULL);
+	}
 
-			static node_type*
-			getFarLeft( node_type* cursor )  {
+	static bool
+	isLowerBoundNode( node_type* node, const key_type& key ) {
 
-				while (cursor != NULL && cursor->left != NULL)
-					cursor = cursor->left;
-				return (cursor);
-			}
+	typename ft::map<Key, T, Compare> tmpObj;
+	typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
 
-			static node_type*
-			getFarRight( node_type* cursor )  {
+		return (node != NULL
+			&& (cmpFunc(node->item.first, key) == false
+				|| isEqualKey(node->item.first, key) == true));
+	}
 
-				while (cursor != NULL && cursor->right != NULL)
-					cursor = cursor->right;
-				return (cursor);
-			}
+	static bool
+	isUpperBoundNode( node_type* node, const key_type& key ) {
+		typename ft::map<Key, T, Compare> tmpObj;
+		typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
+		return (node != NULL && cmpFunc(key, node->item.first) == true);
+	}
 
-			static bool
-			isLeaf(node_type* node)  {
-				return (node->left == NULL && node->right == NULL);
-			}
+	void
+	btree_update_dumbNode( void )	{
+		if (dumbNode_ == NULL)
+			btree_init_dumbNode();
+		if (empty() == true)	{
+			dumbNode_->left = head_;
+			dumbNode_->right = head_;
+		}
+		else	{
+			dumbNode_->left = getFarLeft(head_);
+			dumbNode_->right = getFarRight(head_);
+		}
+	}
 
-			static bool
-			isEqualKey(const Key& existingKey, const Key& newKey) {
-				typename ft::map<Key, T, Compare> tmpObj;
-				typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
-				return (cmpFunc(existingKey, newKey) == false
-				&& cmpFunc(newKey, existingKey) == false);
-			}
+	void
+	btree_init_dumbNode( void )	{
 
-			size_t
-			incSize( size_t inc = 1 ) { _size += inc; return(_size); }
+		if (dumbNode_ == NULL)	{
+			dumbNode_ = allocNode_.allocate(1);
+			allocNode_.construct(dumbNode_, node_type(value_type()));
+			dumbNode_->left = head_;
+			dumbNode_->right = head_;
+		}
+	}
 
-			size_t
-			decSize( size_t inc = 1 ) { _size -= inc; return(_size); }
+	node_type*
+	btree_create_node(node_type* parent, key_type k, mapped_type val)	{
 
-			void
-			freeNode( node_type* node)	{
-				if (node != NULL)	{
-					_allocNode.destroy(node);
-					_allocNode.deallocate(node, 1);
-				}
-			}
+		node_type*	newNode = allocNode_.allocate(1);
+		allocNode_.construct(newNode, node_type(value_type(k ,val)));
+		newNode->parent = parent;
+		return (newNode);
+	}
 
-			void
-			freeAllNodes( node_type* root )	{
+		/**
+		 * @brief Actual function inserting new data in the tree.
+		 * @param parent shall be NULL to insert anywhere from the head.
+		 * @param root starting point in the tree to look for a suitable potision.
+		 * @param pairSrc pair to be inserted.
+		*/
 
-				if (root == NULL)
-					return;
-				freeAllNodes(root->left);
-				freeAllNodes(root->right);
-				freeNode(root);
-			}
+	ft::pair<iterator, bool>
+	btree_insert_data(node_type* parent, node_type **root, value_type pairSrc)	{
 
-			allocator_type
-			get_allocator() const	{
-				return _allocNode();
-			}
+		if (*root != NULL)	{
+			node_type* tree = *root;
+			if (comp(pairSrc.first, tree->item.first) == true)
+				return (btree_insert_data(tree, &tree->left, pairSrc));
+			else if (isEqualKey(pairSrc.first, tree->item.first) == false)
+				return (btree_insert_data(tree, &tree->right, pairSrc));
+			else
+				return (ft::pair<iterator, bool>(iterator(*root, dumbNode_, comp), false));
+		}
+		else	{
+			*root = btree_create_node(parent, pairSrc.first, pairSrc.second);
+			incSize();
+			btree_update_dumbNode();
+			return (ft::pair<iterator, bool>(iterator(*root, dumbNode_, comp), true));
+		}
+	}
 
-		}; // -------------------------------------------------------- Class map
+	node_type*
+	btree_search_key(node_type* root, const key_type& targetKey)	{
+
+		if (root != NULL)	{
+			if (comp(targetKey, root->item.first) == true)
+				return (btree_search_key(root->left, targetKey));
+			else if (comp(root->item.first, targetKey) == true)
+				return (btree_search_key(root->right, targetKey));
+		}
+		return (root);
+	}
+
+	static node_type*
+	getFarLeft( node_type* cursor )  {
+
+		while (cursor != NULL && cursor->left != NULL)
+			cursor = cursor->left;
+		return (cursor);
+	}
+
+	static node_type*
+	getFarRight( node_type* cursor )  {
+
+		while (cursor != NULL && cursor->right != NULL)
+			cursor = cursor->right;
+		return (cursor);
+	}
+
+	static bool
+	isLeaf(node_type* node)  {
+		return (node->left == NULL && node->right == NULL);
+	}
+
+	static bool
+	isEqualKey(const Key& existingKey, const Key& newKey) {
+		typename ft::map<Key, T, Compare> tmpObj;
+		typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
+		return (cmpFunc(existingKey, newKey) == false
+		&& cmpFunc(newKey, existingKey) == false);
+	}
+
+	size_t
+	incSize( size_t inc = 1 ) { size_ += inc; return(size_); }
+
+	size_t
+	decSize( size_t inc = 1 ) { size_ -= inc; return(size_); }
+
+	void
+	freeNode( node_type* node)	{
+		if (node != NULL)	{
+			allocNode_.destroy(node);
+			allocNode_.deallocate(node, 1);
+		}
+	}
+
+	void
+	freeAllNodes( node_type* root )	{
+
+		if (root == NULL)
+			return;
+		freeAllNodes(root->left);
+		freeAllNodes(root->right);
+		freeNode(root);
+	}
+
+	allocator_type
+	get_allocator() const	{
+		return allocNode_();
+	}
+
+}; // -------------------------------------------------------- Class map
 
 /******************************************************************************.
 .******************************************************************************.
