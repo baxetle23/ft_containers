@@ -10,7 +10,6 @@
 
 namespace ft	{
 
-
 //--------------------
 //-----CLASS_PAIR-----
 //--------------------
@@ -701,36 +700,38 @@ private:
 	void detachFromParent(node_type* node, node_type* newChild = NULL)	{
 		node_type* parent = node->parent;
 		if (parent != NULL)	{
-			if (parent->left == node)
+			if (parent->left == node) {
 				parent->left = newChild;
-			else if (parent->right == node)
+			} else if (parent->right == node) {
 				parent->right = newChild;
+			}
 		}
-		else if (node == head_)
+		else if (node == head_) {
 			head_ = newChild;
-		if (newChild != NULL)
+		}
+		if (newChild != NULL) {
 			newChild->parent = parent;
+		}
 		node->parent = NULL;
 	}
 
-	static node_type*
-	getSingleChild( node_type* node )	{
+	static node_type* getSingleChild( node_type* node )	{
 
-		if (node->right != NULL && node->left == NULL)
+		if (node->right != NULL && node->left == NULL) {
 			return (node->right);
-		else if (node->right == NULL && node->left != NULL)
+		} else if (node->right == NULL && node->left != NULL) {
 			return (node->left);
-		else
+		} else {
 			return (NULL);
+		}
 	}
 
-	node_type*
-	locateBound( node_type* root, const key_type& key, bool (*isBound)(node_type*, const key_type&) ) const	{
-
-		if (root == head_ && isBound(dumbNode_->left, key) == true)
+	node_type* locateBound( node_type* root, const key_type& key, bool (*isBound)(node_type*, const key_type&) ) const {
+		if (root == head_ && isBound(dumbNode_->left, key) == true) {
 			return (dumbNode_->left);
-		else if (root == head_ && isBound(dumbNode_->right, key) == false)
+		} else if (root == head_ && isBound(dumbNode_->right, key) == false) {
 			return (NULL);
+		}
 
 		node_type* candidate = root;
 		node_type* bestCandidate = NULL;
@@ -738,30 +739,29 @@ private:
 			if (isBound(candidate, key) == true)	{
 				bestCandidate = candidate;
 				candidate = candidate->left;
-			}
-			else
+			} else {
 				candidate = candidate->right;
+			}
 		}
-		return (bestCandidate);
+		return bestCandidate;
 	}
 
-	node_type*
-	locateNode( node_type* root, const key_type& key ) const	{
+	node_type* locateNode( node_type* root, const key_type& key ) const	{
 
 		if (root != NULL)	{
-			if (comp(key, root->item.first) == true)
-				return (locateNode(root->left, key));
-			else if (isEqualKey(key, root->item.first) == false)
-				return (locateNode(root->right, key));
-			else
-				return (root);
+			if (comp(key, root->item.first) == true) {
+				return locateNode(root->left, key);
+			} else if (isEqualKey(key, root->item.first) == false) {
+				return locateNode(root->right, key);
+			} else {
+				return root;
+			}
+		} else {
+			return NULL;
 		}
-		else
-			return (NULL);
 	}
 
-	static bool
-	isLowerBoundNode( node_type* node, const key_type& key ) {
+	static bool isLowerBoundNode( node_type* node, const key_type& key ) {
 
 	typename ft::map<Key, T, Compare> tmpObj;
 	typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
@@ -771,30 +771,26 @@ private:
 				|| isEqualKey(node->item.first, key) == true));
 	}
 
-	static bool
-	isUpperBoundNode( node_type* node, const key_type& key ) {
+	static bool isUpperBoundNode( node_type* node, const key_type& key ) {
 		typename ft::map<Key, T, Compare> tmpObj;
 		typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
 		return (node != NULL && cmpFunc(key, node->item.first) == true);
 	}
 
-	void
-	btree_update_dumbNode( void )	{
-		if (dumbNode_ == NULL)
+	void btree_update_dumbNode()	{
+		if (dumbNode_ == NULL) {
 			btree_init_dumbNode();
+		}
 		if (empty() == true)	{
 			dumbNode_->left = head_;
 			dumbNode_->right = head_;
-		}
-		else	{
+		} else {
 			dumbNode_->left = getFarLeft(head_);
 			dumbNode_->right = getFarRight(head_);
 		}
 	}
 
-	void
-	btree_init_dumbNode( void )	{
-
+	void btree_init_dumbNode() {
 		if (dumbNode_ == NULL)	{
 			dumbNode_ = allocNode_.allocate(1);
 			allocNode_.construct(dumbNode_, node_type(value_type()));
@@ -803,180 +799,152 @@ private:
 		}
 	}
 
-	node_type*
-	btree_create_node(node_type* parent, key_type k, mapped_type val)	{
-
+	node_type* btree_create_node(node_type* parent, key_type k, mapped_type val) {
 		node_type*	newNode = allocNode_.allocate(1);
 		allocNode_.construct(newNode, node_type(value_type(k ,val)));
 		newNode->parent = parent;
-		return (newNode);
+		return newNode;
 	}
 
-		/**
-		 * @brief Actual function inserting new data in the tree.
-		 * @param parent shall be NULL to insert anywhere from the head.
-		 * @param root starting point in the tree to look for a suitable potision.
-		 * @param pairSrc pair to be inserted.
-		*/
 
-	ft::pair<iterator, bool>
-	btree_insert_data(node_type* parent, node_type **root, value_type pairSrc)	{
+	ft::pair<iterator, bool> btree_insert_data(node_type* parent, node_type **root, value_type pairSrc)	{
 
 		if (*root != NULL)	{
 			node_type* tree = *root;
-			if (comp(pairSrc.first, tree->item.first) == true)
+			if (comp(pairSrc.first, tree->item.first) == true) {
 				return (btree_insert_data(tree, &tree->left, pairSrc));
-			else if (isEqualKey(pairSrc.first, tree->item.first) == false)
+			} else if (isEqualKey(pairSrc.first, tree->item.first) == false) {
 				return (btree_insert_data(tree, &tree->right, pairSrc));
-			else
-				return (ft::pair<iterator, bool>(iterator(*root, dumbNode_, comp), false));
-		}
-		else	{
+			} else {
+				return ft::pair<iterator, bool>(iterator(*root, dumbNode_, comp), false);
+			}
+		} else {
 			*root = btree_create_node(parent, pairSrc.first, pairSrc.second);
 			incSize();
 			btree_update_dumbNode();
-			return (ft::pair<iterator, bool>(iterator(*root, dumbNode_, comp), true));
+			return ft::pair<iterator, bool>(iterator(*root, dumbNode_, comp), true);
 		}
 	}
 
-	node_type*
-	btree_search_key(node_type* root, const key_type& targetKey)	{
+	node_type* btree_search_key(node_type* root, const key_type& targetKey)	{
 
 		if (root != NULL)	{
-			if (comp(targetKey, root->item.first) == true)
+			if (comp(targetKey, root->item.first) == true) {
 				return (btree_search_key(root->left, targetKey));
-			else if (comp(root->item.first, targetKey) == true)
+			} else if (comp(root->item.first, targetKey) == true) {
 				return (btree_search_key(root->right, targetKey));
+			}
 		}
 		return (root);
 	}
 
-	static node_type*
-	getFarLeft( node_type* cursor )  {
-
-		while (cursor != NULL && cursor->left != NULL)
+	static node_type* getFarLeft( node_type* cursor )  {
+		while (cursor != NULL && cursor->left != NULL) {
 			cursor = cursor->left;
-		return (cursor);
+		}
+		return cursor;
 	}
 
-	static node_type*
-	getFarRight( node_type* cursor )  {
-
-		while (cursor != NULL && cursor->right != NULL)
+	static node_type* getFarRight( node_type* cursor ) {
+		while (cursor != NULL && cursor->right != NULL) {
 			cursor = cursor->right;
-		return (cursor);
+		}
+		return cursor;
 	}
 
-	static bool
-	isLeaf(node_type* node)  {
-		return (node->left == NULL && node->right == NULL);
+	static bool isLeaf(node_type* node)  {
+		return node->left == NULL && node->right == NULL;
 	}
 
-	static bool
-	isEqualKey(const Key& existingKey, const Key& newKey) {
+	static bool isEqualKey(const Key& existingKey, const Key& newKey) {
 		typename ft::map<Key, T, Compare> tmpObj;
 		typename ft::map<Key, T, Compare>::key_compare cmpFunc = tmpObj.key_comp();
-		return (cmpFunc(existingKey, newKey) == false
-		&& cmpFunc(newKey, existingKey) == false);
+		return cmpFunc(existingKey, newKey) == false && cmpFunc(newKey, existingKey) == false;
 	}
 
-	size_t
-	incSize( size_t inc = 1 ) { size_ += inc; return(size_); }
+	size_t incSize(size_t inc = 1) {
+		size_ += inc; 
+		return size_; 
+	}
 
-	size_t
-	decSize( size_t inc = 1 ) { size_ -= inc; return(size_); }
+	size_t decSize(size_t inc = 1) {
+		size_ -= inc; 
+		return size_; 
+	}
 
-	void
-	freeNode( node_type* node)	{
+	void freeNode( node_type* node)	{
 		if (node != NULL)	{
 			allocNode_.destroy(node);
 			allocNode_.deallocate(node, 1);
 		}
 	}
 
-	void
-	freeAllNodes( node_type* root )	{
-
-		if (root == NULL)
+	void freeAllNodes( node_type* root ) {
+		if (root == NULL) {
 			return;
+		}
 		freeAllNodes(root->left);
 		freeAllNodes(root->right);
 		freeNode(root);
 	}
 
-	allocator_type
-	get_allocator() const	{
+	allocator_type get_allocator() const {
 		return allocNode_();
 	}
 
-}; // -------------------------------------------------------- Class map
+};
 
-/******************************************************************************.
-.******************************************************************************.
-.*********** PUBLIC NON MEMBER FUNCTIONS     **********************************.
-.******************************************************************************.
-.******************************************************************************/
+template <class Key, class T, class Compare, class Alloc>
+void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y) {
+	x.swap(y);
+};
 
-		template <class Key, class T, class Compare, class Alloc>
-		void
-		swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)	{
+template< class Key, class T, class Compare, class Alloc >
+bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )	{
 
-			x.swap(y);
-		};
+	if (lhs.size() != rhs.size()) {
+		return false;
+	}
 
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator==( const map<Key,T,Compare,Alloc>& lhs,
-						const map<Key,T,Compare,Alloc>& rhs )	{
+	typename ft::map<Key,T,Compare,Alloc>::const_iterator lhs_it = lhs.begin();
+	typename ft::map<Key,T,Compare,Alloc>::const_iterator rhs_it = rhs.begin();
 
-			if (lhs.size() != rhs.size())
-				return false;
-
-			typename ft::map<Key,T,Compare,Alloc>::const_iterator lhs_it = lhs.begin();
-			typename ft::map<Key,T,Compare,Alloc>::const_iterator rhs_it = rhs.begin();
-
-			for (;lhs_it != lhs.end() && rhs_it != rhs.end(); lhs_it++, rhs_it++)	{
-				if (lhs_it->first != rhs_it->first || lhs_it->second != rhs_it->second)
-					return false;
-			}
-			if (lhs_it != lhs.end() || rhs_it != rhs.end())
-				return false;
-			return true;
-
+	for (;lhs_it != lhs.end() && rhs_it != rhs.end(); lhs_it++, rhs_it++) {
+		if (lhs_it->first != rhs_it->first || lhs_it->second != rhs_it->second) {
+			return false;
 		}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator!=( const map<Key,T,Compare,Alloc>& lhs,
-						const map<Key,T,Compare,Alloc>& rhs )	{
-			return !(lhs == rhs);
-		}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator<( const map<Key,T,Compare,Alloc>& lhs,
-						const map<Key,T,Compare,Alloc>& rhs )	{
-
-			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
-		}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator>=( const map<Key,T,Compare,Alloc>& lhs,
-						const map<Key,T,Compare,Alloc>& rhs )	{
-
-			return !(lhs < rhs);
-		}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator<=( const map<Key,T,Compare,Alloc>& lhs,
-						const map<Key,T,Compare,Alloc>& rhs )	{
-			return (lhs < rhs || lhs == rhs);
-		}
-
-		template< class Key, class T, class Compare, class Alloc >
-		bool operator>( const map<Key,T,Compare,Alloc>& lhs,
-						const map<Key,T,Compare,Alloc>& rhs )	{
-
-			return !(lhs <= rhs);
-
-		}
+	}
+	if (lhs_it != lhs.end() || rhs_it != rhs.end()) {
+		return false;
+	}
+	return true;
 }
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+	return !(lhs == rhs);
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator<(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator>=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+	return !(lhs < rhs);
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator<=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+	return (lhs < rhs || lhs == rhs);
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator>(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+	return !(lhs <= rhs);
+}
+
+} // namespace ft
 
 #endif
