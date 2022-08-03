@@ -446,21 +446,21 @@ public:
 		return (iterator(dumbNode_, dumbNode_, comp));
 	}
 
-	// const_iterator
-	// begin( void ) const		{
-	// 	if (empty() == false && dumbNode_ != NULL)
-	// 		return (const_iterator(dumbNode_->left, dumbNode_, comp));
-	// 	return (const_iterator(dumbNode_, dumbNode_, comp));
-	// }
+	//исправить на const_iterator
+	const iterator begin() const {
+		if (empty() == false && dumbNode_ != NULL)
+			return iterator(dumbNode_->left, dumbNode_, comp);
+		return iterator(dumbNode_, dumbNode_, comp);
+	}
 
 	iterator end() {
 		return iterator(dumbNode_, dumbNode_, comp);
 	}
 
-	// const_iterator
-	// end( void ) const 		{
-	// 	return (const_iterator(dumbNode_, dumbNode_, comp));
-	// }
+	//исправить на const_iterator
+	const iterator end() const {
+		return iterator(dumbNode_, dumbNode_, comp);
+	}
 
 	reverse_iterator rbegin() {
 		return reverse_iterator(end());
