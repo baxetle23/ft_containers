@@ -303,8 +303,10 @@ public:
 	typedef typename Allocator::const_pointer		const_pointer;
 
 	typedef typename ft::map_iterator<Key, T, Compare, ft::map_node<value_type> >	iterator;
+	typedef const iterator const_iterator;
 
 	typedef typename ft::reverse_iterator<map_iterator<Key, T, Compare, ft::map_node<value_type> > > reverse_iterator;
+	typedef const reverse_iterator const_reverse_iterator;
 
 private:
 
@@ -447,7 +449,7 @@ public:
 	}
 
 	//исправить на const_iterator
-	const iterator begin() const {
+	const_iterator begin() const {
 		if (empty() == false && dumbNode_ != NULL)
 			return iterator(dumbNode_->left, dumbNode_, comp);
 		return iterator(dumbNode_, dumbNode_, comp);
@@ -458,19 +460,25 @@ public:
 	}
 
 	//исправить на const_iterator
-	const iterator end() const {
+	const_iterator end() const {
 		return iterator(dumbNode_, dumbNode_, comp);
 	}
 
 	reverse_iterator rbegin() {
 		return reverse_iterator(end());
 	}
-	// const_reverse_iterator	rbegin( void ) 	const	{	return const_reverse_iterator(end()); }
+
+	const_reverse_iterator	rbegin() 	const	{
+		return reverse_iterator(end()); 
+	}
 	
 	reverse_iterator rend() {
 		return reverse_iterator(begin()); 
 	}
-	// const_reverse_iterator	rend( void ) 	const	{	return const_reverse_iterator(begin()); }
+	
+	const_reverse_iterator	rend() const {
+		return reverse_iterator(begin()); 
+	}
 
 	iterator find (const key_type& k) {
 		if (empty() == true) {
@@ -483,16 +491,16 @@ public:
 		return iterator(nodeFound, dumbNode_, comp);
 	}
 
-	// const_iterator
-	// find (const key_type& k) const	{
-
-	// 	if (empty() == true)
-	// 		return(const_iterator());
-	// 	node_type* const	nodeFound = locateNode(head_, k);
-	// 	if (nodeFound == NULL)
-	// 		return (end());
-	// 	return (const_iterator(nodeFound, dumbNode_, comp));
-	// }
+	const_iterator find (const key_type& k) const {
+		if (empty() == true) {
+			return iterator();
+		}
+		node_type* const	nodeFound = locateNode(head_, k);
+		if (nodeFound == NULL) {
+			return end();
+		}
+		return iterator(nodeFound, dumbNode_, comp);
+	}
 
 	size_type count (const key_type& k) const {
 		return (find(k) != end() ? 1 : 0);
@@ -512,19 +520,20 @@ public:
 		}
 	}
 
-	// const_iterator
-	// lower_bound (const key_type& k) const	{
+	const_iterator lower_bound (const key_type& k) const	{
 
-	// 	if (empty() == true)
-	// 		return(const_iterator());
+		if (empty() == true) {
+			return iterator();
+		}
 
-	// 	node_type* const	nodeFound = locateBound(head_, k, isLowerBoundNode);
+		node_type* const	nodeFound = locateBound(head_, k, isLowerBoundNode);
 
-	// 	if (nodeFound == NULL)
-	// 		return (end());
-	// 	else
-	// 		return (const_iterator(nodeFound, dumbNode_, comp));
-	// }
+		if (nodeFound == NULL) {
+			return end();
+		} else {
+			return iterator(nodeFound, dumbNode_, comp);
+		}
+	}
 
 
 	iterator upper_bound (const key_type& k) {
@@ -542,30 +551,29 @@ public:
 		}
 	}
 
-	// const_iterator
-	// upper_bound (const key_type& k) const	{
+	const_iterator upper_bound (const key_type& k) const {
 
-	// 	if (empty() == true)
-	// 		return(const_iterator());
+		if (empty() == true) {
+			return iterator();
+		}
 
-	// 	node_type* const	nodeFound = locateBound(head_, k, isUpperBoundNode);
+		node_type* const	nodeFound = locateBound(head_, k, isUpperBoundNode);
 
-	// 	if (nodeFound == NULL)
-	// 		return (end());
-	// 	else
-	// 		return (const_iterator(nodeFound, dumbNode_, comp));
-	// }
+		if (nodeFound == NULL) {
+			return (end());
+		} else {
+			return iterator(nodeFound, dumbNode_, comp);
+		}
+	}
 
 
 	ft::pair<iterator,iterator> equal_range (const key_type& k)	{
 		return ft::make_pair(lower_bound(k), upper_bound(k));
 	}
 
-	// ft::pair<const_iterator, const_iterator>
-	// equal_range (const key_type& k) const	{
-
-	// 	return (ft::make_pair(lower_bound(k), upper_bound(k)));
-	// }
+	ft::pair<const_iterator, const_iterator> equal_range (const key_type& k) const	{
+		return ft::make_pair(lower_bound(k), upper_bound(k));
+	}
 
 
 	ft::pair<iterator, bool> insert(const value_type& val) {
