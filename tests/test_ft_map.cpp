@@ -46,7 +46,17 @@ void testConstructMap() {
 }
 
 void testSizeMap() {
+    size_t size_map = 1000;
+    ft::map<int, double> ft_map;
 
+    for(size_t i = 0; i < size_map; ++i) {
+        ft_map[i] = i + 0.1;
+    }
+
+    assert(ft_map.empty() == false);
+    assert(ft_map.size() == size_map);
+    assert(ft_map.count(0) == true);
+    assert(ft_map.count(1000) == false);
 }
 
 void testIteratorMap() {
