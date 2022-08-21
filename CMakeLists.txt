@@ -19,10 +19,9 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_stack/ft_stack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_iterator/ft_iterator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_map/ft_map.cpp
-
 )
 
-add_library(_ftcontainers SHARED ${SOURCES})
+add_library(ft_containers SHARED ${SOURCES})
 
 if(BUILD_TEST)
     add_subdirectory(${CMAKE_SOURCE_DIR}/tests)

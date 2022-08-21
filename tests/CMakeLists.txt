@@ -8,7 +8,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../ft_map/
 )
 
-add_link_options(-l_ftcontainers)
+add_link_options(-lft_containers)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../build/)
 
 set(CMAKE_CXX_FLAGS " -g -std=c++17")
