@@ -60,28 +60,115 @@ void testSizeMap() {
 }
 
 void testIteratorMap() {
+    ft::map<int, std::string> map;
+    map.insert(ft::make_pair(21, "sber"));
+    map.insert(ft::make_pair(42, "ecole"));
+    
+    //iterator
+    ft::map<int, std::string>::iterator it = map.begin();
+    assert(it->first == 21);
+    assert(it->second == "sber");
+    ++it;
+    assert(it->first == 42);
+    assert(it->second == "ecole");
+    ++it;
+    assert(it == map.end());
 
+    //reverse_iterator
+    ft::map<int, std::string>::reverse_iterator rit = map.rbegin();
+    assert(rit->first == 42);
+    assert(rit->second == "ecole");
+    ++rit;
+    assert(rit->first == 21);
+    assert(rit->second == "sber");
 }
 
 void testFindMap() {
+    ft::map<char,int> mymap;
+    ft::map<char,int>::iterator it;
 
+    mymap['a']=50;
+    mymap['b']=100;
+    mymap['c']=150;
+    mymap['d']=200;
+
+    it = mymap.find('b');
+
+    if (it != mymap.end()) {
+        mymap.erase (it);
+    }
+
+    assert(mymap.find('a')->second == 50);
+    assert(mymap.find('c')->second == 150); 
+    assert(mymap.find('d')->second == 200);
+    assert(mymap.count('b') == 0);
 }
 
 void testBoundMap() {
+    ft::map<char,int> mymap;
+    ft::map<char,int>::iterator itlow,itup;
 
+    mymap['a']=20;
+    mymap['b']=40;
+    mymap['c']=60;
+    mymap['d']=80;
+    mymap['e']=100;
+
+    itlow=mymap.lower_bound ('b');  //iterator on b
+    itup=mymap.upper_bound ('d');   //iterator on next d
+
+    assert(itlow->first == 'b');
+    assert(itup->first == 'e');
+
+    mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+    // print content:
+    ft::map<char,int>::iterator it = mymap.begin();
+    assert(it->first == 'a');
+    ++it;
+    assert(it->first == 'e');
 }
 
 void testInsertMap() {
+    ft::map<char,int> mymap;
 
+    // first insert function version (single parameter):
+    mymap.insert(ft::pair<char,int>('a',100));
+    mymap.insert(ft::pair<char,int>('z',200));
+
+    ft::pair<ft::map<char,int>::iterator,bool> ret;
+    ret = mymap.insert (ft::pair<char,int>('z',500));
+    assert(ret.second == false);
+    assert(ret.first->second == 200);
+
+    // second insert function version (with hint position):
+    ft::map<char,int>::iterator it = mymap.begin();
+    mymap.insert(it, ft::pair<char,int>('b',300));  // max efficiency inserting
+    mymap.insert(it, ft::pair<char,int>('c',400));  // no max efficiency inserting
+
+    it = mymap.begin();
+    assert(it->first == 'a');
+    ++it;
+    assert(it->first == 'b');
+    ++it;
+    assert(it->first == 'c');
+    ++it;
+    assert(it->first == 'z');
+    ++it;
+
+    // third insert function version (range insertion):
+    ft::map<char,int> anothermap;
+    anothermap.insert(mymap.begin(),mymap.find('c'));
+    it = anothermap.begin();
+    assert(it->first == 'a');
+    ++it;
+    assert(it->first == 'b');
 }
 
 void testEraseMap() {
 
 }
 
-void testOperatorMap() {
-
-}
 
 void test_ft_map() {
     testConstructMap();
@@ -91,5 +178,4 @@ void test_ft_map() {
     testBoundMap();
     testInsertMap();
     testEraseMap();
-    testOperatorMap();
 }

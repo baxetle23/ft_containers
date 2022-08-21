@@ -4,6 +4,8 @@ project(ft_containers CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++98")
 
+option(BUILD_TEST "Build Tests" ON)
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_vector/
     ${CMAKE_CURRENT_SOURCE_DIR}/ft_stack/
@@ -21,8 +23,6 @@ set(SOURCES
 )
 
 add_library(_ftcontainers SHARED ${SOURCES})
-
-option(BUILD_TEST "Build Tests" ON)
 
 if(BUILD_TEST)
     add_subdirectory(${CMAKE_SOURCE_DIR}/tests)

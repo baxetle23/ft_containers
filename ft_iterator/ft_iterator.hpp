@@ -45,7 +45,7 @@ struct iterator_traits {
     typedef typename It::value_type         value_type;
     typedef typename It::difference_type    difference_type;
     typedef typename It::pointer            pointer;
-    typedef typename It::refernce           reference;
+    typedef typename It::reference           reference;
 };
 
 template <typename T>
@@ -280,7 +280,7 @@ template <typename RanIt>
 class reverse_iterator : public iterator<
     typename iterator_traits<RanIt>::iterator_category,
     typename iterator_traits<RanIt>::value_type,
-    typename iterator_traits<RanIt>::defference_type,
+    typename iterator_traits<RanIt>::difference_type,
     typename iterator_traits<RanIt>::pointer,
     typename iterator_traits<RanIt>::reference> {
 private:
