@@ -7,7 +7,7 @@
 /**************************************************/
 #define VECTOR			"/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp"
 // #define STACK			"/home/aponyatov/Desktop/ft_cont/ft_containers/ft_stack/ft_stack.hpp"
-// #define MAP			  	"/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp"
+#define MAP			  	"/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp"
 // #define SET			  	"../../../Set.hpp"
 // #define UTILITIES		"../../../Utility.hpp"
 

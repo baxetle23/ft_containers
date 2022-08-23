@@ -1,55 +1,969 @@
-../vector_tests/using allocator.cpp:14:46: error: use of undeclared identifier 'Alloc'
-    exit(run_vector_allocator_unit_test<int, Alloc<int> >("using allocator", allocator_test));
-                                             ^
+In file included from ../map_tests/operator >=.cpp:2:
+In file included from ../map_tests/__service.ipp:3:
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:5:10: fatal error: 'ft_iterator.hpp' file not found
+#include "ft_iterator.hpp"
+         ^~~~~~~~~~~~~~~~~
 1 error generated.
-.cpp:30:10: note: in instantiation of function template specialization 'run_vector_unit_test<int>' requested here
-    exit(run_vector_unit_test<int>("clear()", clear_test, clear_test));
-         ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:56:14: note: explicit constructor is not a candidate
-    explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-             ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:61:14: note: explicit constructor is not a candidate
-    explicit vector(size_type n, const T& val = T(), const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-             ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:69:14: note: explicit constructor is not a candidate
-    explicit vector(const my_vector& x) : vector_base(x.allocator_) {
-             ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:78:14: note: explicit constructor is not a candidate
-    explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-             ^
-1 error generated.
-/vector_tests/swap().cpp:1:
-In file included from ../vector_tests/../system/system_methods.ipp:2:
-In file included from ../vector_tests/../system/lib.hpp:12:
-In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:38:
-In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/utility:70:
-In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:59:
-/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/move.h:197:11: error: no matching constructor for initialization of 'ft::vector<int>'
-      _Tp __tmp = _GLIBCXX_MOVE(__a);
-          ^       ~~~~~~~~~~~~~~~~~~
-../vector_tests/swap().cpp:58:10: note: in instantiation of function template specialization 'std::swap<ft::vector<int>>' requested here
-    std::swap(vector, tmp2);
-         ^
-../vector_tests/swap().cpp:72:57: note: in instantiation of function template specialization 'swap_test<int>' requested here
-    exit(run_vector_unit_test<int>("swap()", swap_test, swap_test));
-                                                        ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:56:14: note: explicit constructor is not a candidate
-    explicit vector (const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-             ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:61:14: note: explicit constructor is not a candidate
-    explicit vector(size_type n, const T& val = T(), const allocator_type& alloc = allocator_type()) : vector_base(alloc) {
-             ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:69:14: note: explicit constructor is not a candidate
-    explicit vector(const my_vector& x) : vector_base(x.allocator_) {
-             ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:78:14: note: explicit constructor is not a candidate
-    explicit vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-             ^
+.
+
+t, int>("at()", at_test, at_test));
+                                                      ^
+../map_tests/at().cpp:28:24: error: no member named 'at' in 'ft::map<int, int>'
+        v.push_back(mp.at(40 * _ratio + 1));
+                    ~~ ^
 2 errors generated.
-.hpp:245:10: note: candidate template ignored: substitution failure [with InputIterator = ft::Ptrit<int, long, int *, int &, int *, int &>]: no member named 'value' in 'ft::is_integral<ft::Ptrit<int, long, int *, int &, int *, int &>>'
-    void insert (iterator position, InputIterator first, InputIterator last,
+est));
+                                                                       ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::plus<int>>::iterator' (aka 'map_iterator<int, int, std::plus<int>, map_node<pair<const int, int>>>') to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::plus<int>>::iterator' (aka 'map_iterator<int, int, std::plus<int>, map_node<pair<const int, int>>>') to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:75:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::plus<int>>::iterator' (aka 'map_iterator<int, int, std::plus<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = mp3.begin(); it != mp3.end(); it++) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::plus<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
          ^
-/home/aponyatov/Desktop/ft_cont/ft_containers/ft_vector/ft_vector.hpp:290:14: note: candidate function not viable: requires 2 arguments, but 3 were provided
-    iterator insert(iterator position, const value_type& val) {
-             ^
-3 errors generated.
+../map_tests/compare class.cpp:76:40: error: no viable conversion from 'map_iterator<[2 * ...], std::plus<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = --mp3.end(); it != mp3.begin(); it--) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::plus<int>, ft::map_node<ft::pair<const int, int>>>' to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::plus<int>, ft::map_node<ft::pair<const int, int>>>' to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:76:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::plus<int>>::iterator' (aka 'map_iterator<int, int, std::plus<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = --mp3.end(); it != mp3.begin(); it--) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::plus<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:79:40: error: no viable conversion from 'map_iterator<[2 * ...], std::minus<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = mp4.begin(); it != mp4.end(); it++) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::minus<int>>::iterator' (aka 'map_iterator<int, int, std::minus<int>, map_node<pair<const int, int>>>') to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::minus<int>>::iterator' (aka 'map_iterator<int, int, std::minus<int>, map_node<pair<const int, int>>>') to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:79:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::minus<int>>::iterator' (aka 'map_iterator<int, int, std::minus<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = mp4.begin(); it != mp4.end(); it++) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::minus<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:80:40: error: no viable conversion from 'map_iterator<[2 * ...], std::minus<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = --mp4.end(); it != mp4.begin(); it--) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::minus<int>, ft::map_node<ft::pair<const int, int>>>' to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::minus<int>, ft::map_node<ft::pair<const int, int>>>' to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:80:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::minus<int>>::iterator' (aka 'map_iterator<int, int, std::minus<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = --mp4.end(); it != mp4.begin(); it--) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::minus<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:83:40: error: no viable conversion from 'map_iterator<[2 * ...], std::greater_equal<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = mp5.begin(); it != mp5.end(); it++) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::greater_equal<int>>::iterator' (aka 'map_iterator<int, int, std::greater_equal<int>, map_node<pair<const int, int>>>') to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::greater_equal<int>>::iterator' (aka 'map_iterator<int, int, std::greater_equal<int>, map_node<pair<const int, int>>>') to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:83:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::greater_equal<int>>::iterator' (aka 'map_iterator<int, int, std::greater_equal<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = mp5.begin(); it != mp5.end(); it++) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::greater_equal<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:84:40: error: no viable conversion from 'map_iterator<[2 * ...], std::greater_equal<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = --mp5.end(); it != mp5.begin(); it--) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::greater_equal<int>, ft::map_node<ft::pair<const int, int>>>' to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::greater_equal<int>, ft::map_node<ft::pair<const int, int>>>' to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:84:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::greater_equal<int>>::iterator' (aka 'map_iterator<int, int, std::greater_equal<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = --mp5.end(); it != mp5.begin(); it--) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::greater_equal<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:87:40: error: no viable conversion from 'map_iterator<[2 * ...], std::multiplies<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = mp6.begin(); it != mp6.end(); it++) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::multiplies<int>>::iterator' (aka 'map_iterator<int, int, std::multiplies<int>, map_node<pair<const int, int>>>') to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::multiplies<int>>::iterator' (aka 'map_iterator<int, int, std::multiplies<int>, map_node<pair<const int, int>>>') to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:87:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::multiplies<int>>::iterator' (aka 'map_iterator<int, int, std::multiplies<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = mp6.begin(); it != mp6.end(); it++) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::multiplies<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:88:40: error: no viable conversion from 'map_iterator<[2 * ...], std::multiplies<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = --mp6.end(); it != mp6.begin(); it--) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::multiplies<int>, ft::map_node<ft::pair<const int, int>>>' to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::multiplies<int>, ft::map_node<ft::pair<const int, int>>>' to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:88:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::multiplies<int>>::iterator' (aka 'map_iterator<int, int, std::multiplies<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = --mp6.end(); it != mp6.begin(); it--) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::multiplies<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:91:40: error: no viable conversion from 'map_iterator<[2 * ...], std::bit_xor<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = mp7.begin(); it != mp7.end(); it++) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::bit_xor<int>>::iterator' (aka 'map_iterator<int, int, std::bit_xor<int>, map_node<pair<const int, int>>>') to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::bit_xor<int>>::iterator' (aka 'map_iterator<int, int, std::bit_xor<int>, map_node<pair<const int, int>>>') to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+../map_tests/compare class.cpp:91:61: error: invalid operands to binary expression ('typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') and 'ft::map<int, int, std::bit_xor<int>>::iterator' (aka 'map_iterator<int, int, std::bit_xor<int>, map_node<pair<const int, int>>>'))
+    for (typename _map<T, V>::iterator it = mp7.begin(); it != mp7.end(); it++) { v.push_back(it->first); }
+                                                         ~~ ^  ~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:398:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:404:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_code' for 1st argument
+  operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:410:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/system_error:415:3: note: candidate function not viable: no known conversion from 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>') to 'const std::error_condition' for 1st argument
+  operator!=(const error_condition& __lhs,
+  ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_pair.h:496:5: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+    operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:397:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:435:5: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+    operator!=(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1482:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_iterator.h:1539:5: note: candidate template ignored: could not match 'move_iterator' against 'map_iterator'
+    operator!=(const move_iterator<_Iterator>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/array:282:5: note: candidate template ignored: could not match 'array' against 'map_iterator'
+    operator!=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/allocator.h:213:5: note: candidate template ignored: could not match 'allocator' against 'map_iterator'
+    operator!=(const allocator<_T1>&, const allocator<_T2>&)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_vector.h:1937:5: note: candidate template ignored: could not match 'vector' against 'map_iterator'
+    operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/tuple:1452:5: note: candidate template ignored: could not match 'tuple' against 'map_iterator'
+    operator!=(const tuple<_TElements...>& __t,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_map.h:1508:5: note: candidate template ignored: could not match 'map' against 'map_iterator'
+    operator!=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multimap.h:1173:5: note: candidate template ignored: could not match 'multimap' against 'map_iterator'
+    operator!=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_set.h:1030:5: note: candidate template ignored: could not match 'set' against 'map_iterator'
+    operator!=(const set<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_multiset.h:1016:5: note: candidate template ignored: could not match 'multiset' against 'map_iterator'
+    operator!=(const multiset<_Key, _Compare, _Alloc>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_deque.h:2286:5: note: candidate template ignored: could not match 'deque' against 'map_iterator'
+    operator!=(const deque<_Tp, _Alloc>& __x, const deque<_Tp, _Alloc>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/stl_stack.h:343:5: note: candidate template ignored: could not match 'stack' against 'map_iterator'
+    operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/postypes.h:227:5: note: candidate template ignored: could not match 'fpos' against 'map_iterator'
+    operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6239:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6252:5: note: candidate template ignored: could not match 'const _CharT *' against 'typename ft::map<int, int>::iterator' (aka 'map_iterator<int, int, std::less<int>, map_node<pair<const int, int>>>')
+    operator!=(const _CharT* __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/basic_string.h:6264:5: note: candidate template ignored: could not match 'basic_string' against 'map_iterator'
+    operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/streambuf_iterator.h:233:5: note: candidate template ignored: could not match 'istreambuf_iterator' against 'map_iterator'
+    operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:774:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:781:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(const unique_ptr<_Tp, _Dp>& __x, nullptr_t) noexcept
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/unique_ptr.h:787:5: note: candidate template ignored: could not match 'unique_ptr' against 'map_iterator'
+    operator!=(nullptr_t, const unique_ptr<_Tp, _Dp>& __x) noexcept
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_iterator.hpp:386:6: note: candidate template ignored: could not match 'reverse_iterator' against 'map_iterator'
+bool operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:56:6: note: candidate template ignored: could not match 'pair' against 'map_iterator'
+bool    operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs){
+        ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:932:6: note: candidate template ignored: could not match 'map' against 'map_iterator'
+bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+     ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:178:10: note: candidate function not viable: no known conversion from 'map_iterator<[2 * ...], std::bit_xor<int>, [...]>' to 'const map_iterator<[2 * ...], std::less<int>, [...]>' for 1st argument
+    bool operator!=(const map_iterator<Key, T, Compare, map_node>& rhs) const { 
+         ^
+../map_tests/compare class.cpp:92:40: error: no viable conversion from 'map_iterator<[2 * ...], std::bit_xor<int>, [...]>' to 'map_iterator<[2 * ...], std::less<int>, [...]>'
+    for (typename _map<T, V>::iterator it = --mp7.end(); it != mp7.begin(); it--) { v.push_back(it->first); }
+                                       ^    ~~~~~~~~~~~
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:96:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::bit_xor<int>, ft::map_node<ft::pair<const int, int>>>' to 'ft::map_node<ft::pair<const int, int>> *' for 1st argument
+    map_iterator(map_node* ptr = NULL, map_node* dumbNode = NULL, const key_compare& comp = key_compare()) :    
+    ^
+/home/aponyatov/Desktop/ft_cont/ft_containers/ft_map/ft_map.hpp:102:5: note: candidate constructor not viable: no known conversion from 'ft::map_iterator<int, int, std::bit_xor<int>, ft::map_node<ft::pair<const int, int>>>' to 'const map_iterator<int, int, std::less<int>, ft::map_node<ft::pair<const int, int>>> &' for 1st argument
+    map_iterator(const map_iterator<Key, T, Compare, map_node>& itSrc) : 
+    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
